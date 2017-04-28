@@ -105,9 +105,16 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplines.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingAllCS.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
-    <Compile Include="Assets\Script\UI\THFeverGage.cs" />
+    <Compile Include="Assets\Script\Cubic\Cubic.cs" />
+    <Compile Include="Assets\Script\Game\GameEngine.cs" />
+    <Compile Include="Assets\Script\Game\THGameSetting.cs" />
+    <Compile Include="Assets\Script\Game\THGametimeManager.cs" />
+    <Compile Include="Assets\Script\MRSingleton.cs" />
+    <Compile Include="Assets\Script\Player\Player.cs" />
+    <Compile Include="Assets\Script\Test\TestGameManager.cs" />
     <Compile Include="Assets\Script\UI\THGageController.cs" />
     <Compile Include="Assets\Script\UI\THIncreseNum.cs" />
+    <Compile Include="Assets\SingletonController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />
