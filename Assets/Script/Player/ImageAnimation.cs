@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ImageAnimation : MonoBehaviour
 {
-    // 애니메이션 클립 추가는 해당 SerializeField의 추가로 제작
-    [SerializeField]
-    Sprite[] animation;
-
-    [SerializeField]
-    Sprite[] animation1;
+    // 애니메이션 클립 추가는 해당 변수의 추가로 제작
+    public Sprite[] animation;
+    public Sprite[] animation1;
+    public Sprite[] animation2;
+    public Sprite[] animation3;
+    public Sprite[] animation4;
 
     private Sprite[] targetAnimation;
     public float delayTime = 0.1f;
@@ -19,6 +19,8 @@ public class ImageAnimation : MonoBehaviour
 
     public void StartAnimation(SpriteRenderer renderer, int animationNumber, float delayTime,System.Action callback = null, bool repeat = false)
     {
+        StopCoroutine(Co_Animation());
+
         this.repeat = repeat;
         this.delayTime = delayTime;
         this.callback = callback;
@@ -28,6 +30,9 @@ public class ImageAnimation : MonoBehaviour
         {
             case 0: targetAnimation = animation;  break;
             case 1: targetAnimation = animation1; break;
+            case 2: targetAnimation = animation2; break;
+            case 3: targetAnimation = animation3; break;
+            case 4: targetAnimation = animation4; break;
             default:
                 break;
         }
@@ -37,14 +42,14 @@ public class ImageAnimation : MonoBehaviour
 
     IEnumerator Co_Animation()
     {
-        while(repeat)
+        do
         {
-            for (int i = 0; i < animation.Length; i++)
+            for (int i = 0; i < targetAnimation.Length; i++)
             {
-                targetRenderer.sprite = animation[i];
+                targetRenderer.sprite = targetAnimation[i];
                 yield return new WaitForSeconds(delayTime);
             }
-        }
+        } while (repeat);
         if (callback != null)
         {
             callback();

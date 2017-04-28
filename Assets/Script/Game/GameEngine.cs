@@ -9,9 +9,6 @@ public class GameEngine : MonoBehaviour
     Cubic[] cubic;
 
     [SerializeField]
-    Text testTotal;
-
-    [SerializeField]
     Player player;
 
     [SerializeField]
@@ -53,7 +50,6 @@ public class GameEngine : MonoBehaviour
                 isFiber = fiberBar.AddFiberCount();
             }
 
-            testTotal.text = "Total : " + this.score.ToString();
             this.score = 0;
             breakCount = 0;
             if (isFiber)
@@ -66,8 +62,12 @@ public class GameEngine : MonoBehaviour
             }
             else
             {
-                SetCubicRandomPosition();
+                for (int i = 0; i < cubic.Length; i++)
+                {
+                    cubic[i].RemoveAnim(false);
+                }
             }
+            player.SetState(Player.EState.Fly);
         }
     }
 
@@ -75,10 +75,13 @@ public class GameEngine : MonoBehaviour
     {
         fiberBar.SetFiberCallback(() => {
             fiberButton.gameObject.SetActive(false);
-            SetCubicRandomPosition();
+            player.SetState(Player.EState.Fly);
         });
 
-        SetCubicRandomPosition();
+        for (int i = 0; i < cubic.Length; i++)
+        {
+            cubic[i].transform.parent.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -89,11 +92,15 @@ public class GameEngine : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            for (int i =0;i< cubic.Length;i ++)
+            for (int i = 0; i < cubic.Length; i++)
             {
                 cubic[i].RemoveAnim(false);
             }
-            player.SetState(Player.EState.Shoot);
+            player.SetState(Player.EState.Finish);
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            player.SetState(Player.EState.Start);
         }
     }
 
@@ -176,7 +183,7 @@ public class GameEngine : MonoBehaviour
     /// <summary>
     /// 큐빅을 랜덤으로 위치 시킨다.
     /// </summary>
-    private void SetCubicRandomPosition()
+    public void SetCubicRandomPosition()
     {
         _positionIndex.Clear();
         _numberIndex.Clear();

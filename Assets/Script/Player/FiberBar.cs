@@ -9,7 +9,7 @@ public class FiberBar : MonoBehaviour
 
     private const float FIBER_TIME = 2.0f;
     private int fiberCount = 4;
-    private bool isFiberTime = false;
+    public bool isFiberTime = false;
     private System.Action fiberTimeOutCallback = null;
 
     private void Start()
