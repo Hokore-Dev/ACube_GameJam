@@ -7,21 +7,28 @@ using UnityEngine.UI;
 public class THGageController : MonoBehaviour {
 
     protected Slider slider;
-    protected int maxValue;
-    protected int currentValue;
+
+    [SerializeField]
+    protected float maxValue;
+
+    [SerializeField]
+    protected float currentValue;
+
+    [SerializeField]
+    protected float addValueDuration;
 
 	// Use this for initialization
 	protected void Start () {
         slider = GetComponent<Slider>();
     }
 
-    public void InitValue(int max_value, int current_value)
+    public void InitValue(float max_value, float current_value)
     {
         maxValue = max_value;
         currentValue = current_value;
     }
 
-    public void InitValue(int max_value, bool full_gage = true)
+    public void InitValue(float max_value, bool full_gage = true)
     {
         if (full_gage)
             InitValue(max_value, max_value);
@@ -29,14 +36,25 @@ public class THGageController : MonoBehaviour {
             InitValue(max_value, 0);
     }
 
-    public void SetValue(int current_value)
+    public void SetValue(float current_value)
     {
-        currentValue = current_value;
+        if(current_value > currentValue)    // 상승
+        {
+            LeanTween.value(currentValue, current_value, addValueDuration).setEaseInOutQuad().setOnUpdate(
+            (float percent) =>
+            {
+                currentValue = percent;
+             });
+        }
+        else
+        {
+            currentValue = current_value;
+        }
     }
 
     protected void OnGUI()
     {
-        slider.value = (float)((float)currentValue / (float)maxValue);
+        slider.value = currentValue / maxValue;
         if (currentValue == 0)
             slider.fillRect.gameObject.SetActive(false);
         else
