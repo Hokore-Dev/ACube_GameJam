@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private enum EState
+    [SerializeField]
+    Camera camera;
+
+    [SerializeField]
+    Shake shake;
+
+    public enum EState
     {
         Up,
         Wait,
@@ -17,5 +23,23 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         characterRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    public void SetState(EState state)
+    {
+        switch (state)
+        {
+            case EState.Up:
+                break;
+            case EState.Wait:
+                break;
+            case EState.Shoot:
+                LeanTween.moveLocalY(this.gameObject, -3, 0.5f).setEaseInBack().setOnComplete(() => {
+                    shake.MakeShake(5);
+                });
+                break;
+            default:
+                break;
+        }
     }
 }
