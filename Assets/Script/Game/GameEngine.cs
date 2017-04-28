@@ -14,31 +14,66 @@ public class GameEngine : MonoBehaviour
     [SerializeField]
     Player player;
 
+    [SerializeField]
+    FiberBar fiberBar;
+
+    [SerializeField]
+    Button fiberButton;
+
     // -2.5 ~ 3 (55)
     // 1 ~ -5 (60)
     private Vector2 START_POSITION = new Vector2(-2.5f, 1f);
 
     List<Vector2> _positionIndex    = new List<Vector2>();
     List<int> _numberIndex          = new List<int>();
+    List<int> _topNumberList = new List<int>();
 
     int breakCount = 0;
     int score = 0;
 
+    /// <summary>
+    /// 큐빅을 터트렸을때
+    /// </summary>
+    /// <param name="score"></param>
     public void AddBreakCount(int score)
     {
         breakCount++;
         this.score += score;
+
+        if (_topNumberList.Contains(score))
+        {
+            _topNumberList.Remove(score);
+        }
         if (breakCount == 3)
         {
+            bool isFiber = false;
+            // 최상위 숫자 3개를 모두 찾았을 때
+            if (_topNumberList.Count == 0)
+            {
+                isFiber = fiberBar.AddFiberCount();
+            }
+
             testTotal.text = "Total : " + this.score.ToString();
             this.score = 0;
             breakCount = 0;
-            SetCubicRandomPosition();
+            if (isFiber)
+            {
+                fiberButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                SetCubicRandomPosition();
+            }
         }
     }
 
     private void Start()
     {
+        fiberBar.SetFiberCallback(() => {
+            fiberButton.gameObject.SetActive(false);
+            SetCubicRandomPosition();
+        });
+
         SetCubicRandomPosition();
     }
 
@@ -58,6 +93,12 @@ public class GameEngine : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 공 배치의 실질적 위치를 가져온다.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     Vector2 GetRealPosition(int x, int y)
     {
         return new Vector2(-2.5f + (float)x / 10, 1 - (float)y / 10);
@@ -77,6 +118,7 @@ public class GameEngine : MonoBehaviour
         position = GetRealPosition(x,y);
         if (!_positionIndex.Contains(position))
         {
+            // 3 * 3 자리에는 위치할 수 없게 제작한다.
             _positionIndex.Add(GetRealPosition(x - splitX, y - splitY));
             _positionIndex.Add(GetRealPosition(x - splitX, y));
             _positionIndex.Add(GetRealPosition(x - splitX, y + splitY));
@@ -97,6 +139,10 @@ public class GameEngine : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 중복되지 않는 랜덤 숫자를 생성한다 (1 ~ 100)
+    /// </summary>
+    /// <returns></returns>
     int GetRandomNumber()
     {
         int random = Random.Range(1, 100);
@@ -111,10 +157,26 @@ public class GameEngine : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 최상위 3개의 숫자를 저장한다
+    /// </summary>
+    private void FindTopNumber()
+    {
+        _numberIndex.Sort();
+        for (int i = 7;i > 4;i--)
+        {
+            _topNumberList.Add(_numberIndex[i]);
+        }
+    }
+
+    /// <summary>
+    /// 큐빅을 랜덤으로 위치 시킨다.
+    /// </summary>
     private void SetCubicRandomPosition()
     {
         _positionIndex.Clear();
         _numberIndex.Clear();
+        _topNumberList.Clear();
 
         for (int i = 0; i < cubic.Length; i++)
         {
@@ -122,5 +184,6 @@ public class GameEngine : MonoBehaviour
             cubic[i].SetNumber(GetRandomNumber());
             cubic[i].Appear();
         }
+        FindTopNumber();
     }
 }
