@@ -11,12 +11,15 @@ public class GameEngine : MonoBehaviour
     [SerializeField]
     Text testTotal;
 
+    [SerializeField]
+    Player player;
+
     // -2.5 ~ 3 (55)
     // 1 ~ -5 (60)
     private Vector2 START_POSITION = new Vector2(-2.5f, 1f);
 
-    List<Vector2> _positionIndex = new List<Vector2>();
-    List<int> _numberIndex = new List<int>();
+    List<Vector2> _positionIndex    = new List<Vector2>();
+    List<int> _numberIndex          = new List<int>();
 
     int breakCount = 0;
     int score = 0;
@@ -34,7 +37,6 @@ public class GameEngine : MonoBehaviour
         }
     }
 
-
     private void Start()
     {
         SetCubicRandomPosition();
@@ -45,6 +47,14 @@ public class GameEngine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SetCubicRandomPosition();
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            for (int i =0;i< cubic.Length;i ++)
+            {
+                cubic[i].transform.parent.gameObject.SetActive(false);
+            }
+            player.SetState(Player.EState.Shoot);
         }
     }
 

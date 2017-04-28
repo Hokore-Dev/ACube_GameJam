@@ -26,8 +26,8 @@ public class GeneralCameraShake : MonoBehaviour {
 		height = height*height * 0.3f;
 		// Debug.Log("height:"+height+" jumpIter:"+jumpIter);
 
-		LeanTween.moveY(avatarBig, height, 1f).setEase(LeanTweenType.easeInOutQuad).setOnComplete( ()=>{
-			LeanTween.moveY(avatarBig, 0f, 0.27f).setEase(LeanTweenType.easeInQuad).setOnComplete( ()=>{
+		LeanTween.moveX(avatarBig, height, 1f).setEase(LeanTweenType.easeInOutQuad).setOnComplete( ()=>{
+			LeanTween.moveX(avatarBig, 0f, 0.27f).setEase(LeanTweenType.easeInQuad).setOnComplete( ()=>{
 				LeanTween.cancel(gameObject);
 
 				/**************
@@ -68,9 +68,6 @@ public class GeneralCameraShake : MonoBehaviour {
 		            lamp.GetComponent<Rigidbody>().AddForce(new Vector3(z, 0f, 0f ) * 15 * height);
 		        }
 
-		        // Play BOOM!
-		        LeanAudio.play(boomAudioClip, transform.position, height*0.2f); // Like this sound? : http://leanaudioplay.dentedpixel.com/?d=a:fvb:8,0,0.003005181,0,0,0.01507768,0.002227979,0,0,8~8,8.130963E-06,0.06526042,0,-1,0.0007692695,2.449077,9.078861,9.078861,0.01541314,0.9343268,-40,-40,0.05169491,0.03835937,-0.08621139,-0.08621139,8~0.1,0,0,~44100
-		        
 		        // Have the jump happen again 2 seconds from now
 		        LeanTween.delayedCall(2f, bigGuyJump);
 			});

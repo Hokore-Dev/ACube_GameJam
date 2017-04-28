@@ -594,6 +594,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18042ef51ca041e4b88d356dbe6fb728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 1620494805}
+  shake: {fileID: 1620494807}
 --- !u!1 &443886681
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +632,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &443886683
@@ -713,6 +715,7 @@ MonoBehaviour:
   - {fileID: 1052851410}
   - {fileID: 1992287993}
   testTotal: {fileID: 518021178}
+  player: {fileID: 390765037}
 --- !u!4 &492321582
 Transform:
   m_ObjectHideFlags: 0
@@ -943,7 +946,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &586972950
@@ -954,7 +957,7 @@ Transform:
   m_GameObject: {fileID: 586972948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.0099998, y: -3.592, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 232044289}
   m_RootOrder: 1
@@ -995,7 +998,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &588998402
@@ -1477,7 +1480,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &1167788948
@@ -1621,7 +1624,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &1501944696
@@ -1673,7 +1676,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &1517745405
@@ -1770,6 +1773,7 @@ GameObject:
   - component: {fileID: 1620494804}
   - component: {fileID: 1620494803}
   - component: {fileID: 1620494802}
+  - component: {fileID: 1620494807}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1847,6 +1851,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1620494807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1620494801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7945c63238cf2b647a0629fdfe1e6e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1685523661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1883,7 +1898,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &1685523663
@@ -1935,7 +1950,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &1782841905
