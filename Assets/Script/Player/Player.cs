@@ -19,9 +19,11 @@ public class Player : MonoBehaviour
 
     private EState state = EState.Wait;
     private SpriteRenderer characterRenderer;
+    private ImageAnimation animation;
 
     private void Awake()
     {
+        animation = GetComponent<ImageAnimation>();
         characterRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
             case EState.Wait:
                 break;
             case EState.Shoot:
+                animation.StartAnimation(characterRenderer,0, 0.1f,null,true);
                 LeanTween.moveLocalY(this.gameObject, -3, 0.5f).setEaseInBack().setOnComplete(() => {
                     shake.MakeShake(5);
                 });

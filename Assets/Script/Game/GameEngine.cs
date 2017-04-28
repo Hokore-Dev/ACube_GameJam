@@ -58,6 +58,10 @@ public class GameEngine : MonoBehaviour
             breakCount = 0;
             if (isFiber)
             {
+                for (int i = 0; i < cubic.Length; i++)
+                {
+                    cubic[i].RemoveAnim(false);
+                }
                 fiberButton.gameObject.SetActive(true);
             }
             else
@@ -87,7 +91,7 @@ public class GameEngine : MonoBehaviour
         {
             for (int i =0;i< cubic.Length;i ++)
             {
-                cubic[i].transform.parent.gameObject.SetActive(false);
+                cubic[i].RemoveAnim(false);
             }
             player.SetState(Player.EState.Shoot);
         }

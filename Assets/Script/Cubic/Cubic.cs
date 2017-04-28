@@ -55,27 +55,33 @@ public class Cubic : MonoBehaviour {
         text.text = number.ToString();
     }
 
+    public void RemoveAnim(bool touchRemove = true)
+    {
+        isAnimating = true;
+        LeanTween.scale(renderer.gameObject, new Vector3(0, 0, 1), 0.1f).setOnComplete(() => {
+            this.transform.parent.gameObject.SetActive(false);
+            if(touchRemove)
+                gameEngine.AddBreakCount(number);
+        });
+
+        LeanTween.value(1f, 0f, 0.1f).setEaseInOutQuad().setOnUpdate(
+            (float percent) =>
+            {
+                text.color = new Color(0, 0, 0, percent);
+            });
+
+        LeanTween.value(FONT_SIZE, 0, 0.1f).setEaseInOutQuad().setOnUpdate(
+            (float percent) =>
+            {
+                text.fontSize = (int)percent;
+            });
+    }
+
     private void OnMouseDown()
     {
         if (this.transform.parent.gameObject.activeSelf && !isAnimating)
         {
-            isAnimating = true;
-            LeanTween.scale(renderer.gameObject, new Vector3(0, 0, 1), 0.1f).setOnComplete(() => {
-                this.transform.parent.gameObject.SetActive(false);
-                gameEngine.AddBreakCount(number);
-            });
-
-            LeanTween.value(1f, 0f, 0.1f).setEaseInOutQuad().setOnUpdate(
-                (float percent) =>
-                {
-                    text.color = new Color(0, 0, 0, percent);
-                });
-
-            LeanTween.value(FONT_SIZE, 0, 0.1f).setEaseInOutQuad().setOnUpdate(
-                (float percent) =>
-                {
-                    text.fontSize = (int)percent;
-                });
+            RemoveAnim(true);
         }
     }
 }
