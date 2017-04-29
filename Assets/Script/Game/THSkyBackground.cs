@@ -48,12 +48,14 @@ public class THSkyBackground : MRSingleton<THSkyBackground> {
     {
         nowFeverSky = true;
         sky.GetComponent<SpriteRenderer>().sprite = fever;
+        sky.GetComponent<SpriteRenderer>().sortingOrder = 99;   //구름 가리기
     }
 
     public void EndFever()
     {
         nowFeverSky = false;
         sky.GetComponent<SpriteRenderer>().sprite = current_sky;
+        sky.GetComponent<SpriteRenderer>().sortingOrder = 10;
     }
 
     public void Scroll(float duration, int jumpHight)
