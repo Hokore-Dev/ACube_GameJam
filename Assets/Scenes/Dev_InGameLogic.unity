@@ -357,6 +357,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &312427549
 Transform:
   m_ObjectHideFlags: 0
@@ -496,6 +498,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &320529986
 Transform:
   m_ObjectHideFlags: 0
@@ -566,6 +570,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &324942781
 Transform:
   m_ObjectHideFlags: 0
@@ -958,6 +964,7 @@ MonoBehaviour:
   - {fileID: 320529985}
   - {fileID: 312427548}
   - {fileID: 1052851410}
+  - {fileID: 1992287993}
   - {fileID: 1992287993}
   player: {fileID: 390765037}
   fiberBar: {fileID: 162875427}
@@ -1698,6 +1705,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &1052851411
 Transform:
   m_ObjectHideFlags: 0
@@ -2448,6 +2457,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!61 &1825149487
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2720,6 +2731,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &1992287994
 Transform:
   m_ObjectHideFlags: 0
@@ -2826,6 +2839,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &2067329294
 Transform:
   m_ObjectHideFlags: 0
@@ -2994,6 +3009,8 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   noneBreakSprite: {fileID: 21300000, guid: af8dd8cbe11e88b4e98a138193dffb00, type: 3}
   breakSprite: {fileID: 21300000, guid: 4e1812f2eccc1a24fa392534022de435, type: 3}
+  bossSprite: {fileID: 21300000, guid: 1004169b952bced4d83cc79a2a427b6c, type: 3}
+  feverSprite: {fileID: 21300000, guid: 33dafb06e51b62a4f8ffe7ccdcd61243, type: 3}
 --- !u!4 &2117145981
 Transform:
   m_ObjectHideFlags: 0

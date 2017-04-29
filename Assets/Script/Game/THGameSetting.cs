@@ -29,6 +29,7 @@ public class THGameSetting : MRSingleton<THGameSetting> {
         public int minBreakCount;
         public int maxNoneBreakCount;
         public int minNoneBreakCount;
+        public bool forceFever = false;
     }
 
     public List<Level> gameLevel = new List<Level>()
@@ -49,7 +50,8 @@ public class THGameSetting : MRSingleton<THGameSetting> {
             maxBreakCount = 4,
             minBreakCount = 4,
             maxNoneBreakCount = 2,
-            minNoneBreakCount = 1
+            minNoneBreakCount = 1,
+            forceFever = true
         },
         new Level() {   // Lv 4
             maxBreakCount = 4,
@@ -79,7 +81,8 @@ public class THGameSetting : MRSingleton<THGameSetting> {
             maxBreakCount = 4,
             minBreakCount = 3,
             maxNoneBreakCount = 2,
-            minNoneBreakCount = 1
+            minNoneBreakCount = 1,
+            forceFever = true
         },
         new Level() {   // Lv 9
             maxBreakCount = 4,
@@ -109,7 +112,8 @@ public class THGameSetting : MRSingleton<THGameSetting> {
             maxBreakCount = 3,
             minBreakCount = 3,
             maxNoneBreakCount = 4,
-            minNoneBreakCount = 2
+            minNoneBreakCount = 2,
+            forceFever = true
         },
         new Level() {   // Lv 14
             maxBreakCount = 3,
@@ -139,7 +143,8 @@ public class THGameSetting : MRSingleton<THGameSetting> {
             maxBreakCount = 3,
             minBreakCount = 2,
             maxNoneBreakCount = 4,
-            minNoneBreakCount = 3
+            minNoneBreakCount = 3,
+            forceFever = true
         },
         new Level() {   // Lv 19
             maxBreakCount = 3,
@@ -169,7 +174,8 @@ public class THGameSetting : MRSingleton<THGameSetting> {
         maxBreakCount = 2,
             minBreakCount = 2,
             maxNoneBreakCount = 6,
-            minNoneBreakCount = 5
+            minNoneBreakCount = 5,
+            forceFever = true
         },
         new Level() {   // Lv 24
              maxBreakCount = 2,
@@ -199,7 +205,8 @@ public class THGameSetting : MRSingleton<THGameSetting> {
             maxBreakCount = 1,
             minBreakCount = 1,
             maxNoneBreakCount = 7,
-            minNoneBreakCount = 6
+            minNoneBreakCount = 6,
+            forceFever = true
         },
         new Level() {   // Lv 29
             maxBreakCount = 1,

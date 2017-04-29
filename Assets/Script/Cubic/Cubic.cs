@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EType
+{
+    Break,
+    NoneBreak,
+    Boss,
+    Fever
+}
+
 public class Cubic : MonoBehaviour
 {
     [SerializeField]
@@ -13,23 +21,44 @@ public class Cubic : MonoBehaviour
     [SerializeField]
     Sprite breakSprite;
 
-    private bool canBreak;
+    [SerializeField]
+    Sprite bossSprite;
+
+    [SerializeField]
+    Sprite feverSprite;
 
     private const float SCALE_VALUE = 0.5f;
     private const int FONT_SIZE = 70;
 
     private SpriteRenderer renderer;
     private bool isAnimating = false;
+    private EType type = EType.Break;
 
     public void Awake()
     {
         renderer = this.transform.FindChild("Cubic").GetComponent<SpriteRenderer>();
     }
 
-    public void SetBreak(bool isBreak)
+    public void SetType(EType type)
     {
-        canBreak = isBreak;
-        renderer.sprite = (canBreak) ? breakSprite : noneBreakSprite;
+        this.type = type;
+        switch (type)
+        {
+            case EType.Break:
+                renderer.sprite = breakSprite;
+                break;
+            case EType.NoneBreak:
+                renderer.sprite = noneBreakSprite;
+                break;
+            case EType.Boss:
+                renderer.sprite = bossSprite;
+                break;
+            case EType.Fever:
+                renderer.sprite = feverSprite;
+                break;
+            default:
+                break;
+        }
     }
 
     public void Appear()
@@ -53,7 +82,7 @@ public class Cubic : MonoBehaviour
         LeanTween.scale(renderer.gameObject, new Vector3(0, 0, 1), 0.1f).setOnComplete(() => {
             this.transform.parent.gameObject.SetActive(false);
             if (touchRemove)
-                gameEngine.AddBreakCount(canBreak);
+                gameEngine.AddBreakCount(type);
         });
     }
 

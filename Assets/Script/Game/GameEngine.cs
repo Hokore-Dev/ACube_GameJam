@@ -53,7 +53,7 @@ public class GameEngine : MonoBehaviour
     int breakCount  = 0;
     int meter = 0;
     int score = 0;
-    int stage = 1;
+    int stage = 0;
 
     bool dieFlow    = false;
     bool clearFlow  = false;
@@ -67,9 +67,9 @@ public class GameEngine : MonoBehaviour
     /// 큐빅을 터트렸을때
     /// </summary>
     /// <param name="shape"></param>
-    public void AddBreakCount(bool isBreak)
+    public void AddBreakCount(EType type)
     {
-        if (!isBreak)
+        if (type == EType.NoneBreak)
         {
             dieFlow = true;
             for (int i = 0; i < cubic.Length; i++)
@@ -79,7 +79,7 @@ public class GameEngine : MonoBehaviour
             txtMeter.StartIncreseNum(0);
             player.SetState(Player.EState.Finish);
         }
-        else
+        else if (type == EType.Break)
         {
             breakCount++;
             if (shouldBreak == breakCount)
@@ -92,6 +92,20 @@ public class GameEngine : MonoBehaviour
                 breakCount = 0;
                 txtMeter.StartIncreseNum(meter += 50);
                 player.SetState(Player.EState.Fly);
+            }
+        }
+        else if (type == EType.Fever)
+        {
+            if (fiberBar.AddFiberCount())
+            {
+                for (int i = 0; i < cubic.Length; i++)
+                {
+                    cubic[i].RemoveAnim(false);
+                }
+                clearFlow = true;
+                breakCount = 0;
+                player.SetState(Player.EState.Fly);
+                fiberButton.gameObject.SetActive(true);
             }
         }
     }
@@ -226,22 +240,35 @@ public class GameEngine : MonoBehaviour
     /// </summary>
     public void SetCubicRandomPosition()
     {
+        shouldBreak = 0;
         clearFlow = false;
         _positionIndex.Clear();
         _numberIndex.Clear();
-        shouldBreak = 0;
 
         THGameSetting.Level level = THGameSetting.Instance.gameLevel[stage];
         int monsterCount = Random.Range(level.minBreakCount, level.maxBreakCount + 1);
         int bombCount    = Random.Range(level.minNoneBreakCount, level.maxNoneBreakCount + 1);
+        int feverCount   = level.forceFever ? 1 : 0;
 
-        for (int i = 0; i < monsterCount + bombCount; i++)
+        int allcount = monsterCount + bombCount + feverCount;
+        for (int i = 0; i < allcount; i++)
         {
             cubic[i].SetPosition(GetRandomPosition());
-            cubic[i].SetBreak((i < monsterCount));
-            if (i < monsterCount)
+            if (monsterCount > 0)
             {
+                cubic[i].SetType(EType.Break);
                 shouldBreak++;
+                monsterCount--;
+            }
+            else if (bombCount > 0)
+            {
+                cubic[i].SetType(EType.NoneBreak);
+                bombCount--;
+            }
+            else if (feverCount > 0)
+            {
+                cubic[i].SetType(EType.Fever);
+                feverCount--;
             }
             cubic[i].Appear();
         }
