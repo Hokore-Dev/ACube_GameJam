@@ -20,6 +20,12 @@ public class THHeightManager : MRSingleton<THHeightManager> {
         uiHeight.StartIncreseNum(currentHeight);
     }
 
+    public void AddHeight(int add_height_value, float duration)
+    {
+        currentHeight += add_height_value;
+        uiHeight.StartIncreseNum(currentHeight, duration);
+    }
+
     public void Drop()
     {
         uiHeight.StartIncreseNum(0);

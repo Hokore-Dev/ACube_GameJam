@@ -60,7 +60,8 @@ public class GameEngine : MonoBehaviour
 
     public void FeberTouch()
     {
-        txtMeter.StartIncreseNum(meter += 100);
+        THHeightManager.Instance.AddHeight(THGameSetting.Instance.heightPerKillMob * 2);
+        //txtMeter.StartIncreseNum(meter += 100);
     }
 
     /// <summary>

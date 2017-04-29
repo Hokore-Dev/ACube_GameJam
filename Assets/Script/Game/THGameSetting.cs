@@ -21,6 +21,9 @@ public class THGameSetting : MRSingleton<THGameSetting> {
     [Header("뛰어오르는 시간")]
     public float heightMotionTime = 1.0f;
 
+    [Header("피버타임때 자동으로 올라갈 높이")]
+    public int autoFeverHeight = 500;
+
     public class Level
     {
         public int maxBreakCount;

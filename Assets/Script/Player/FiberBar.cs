@@ -23,14 +23,16 @@ public class FiberBar : MonoBehaviour
     }
 
     public bool AddFiberCount()
-    {
+    {        
         if (isFiberTime)
             return false;
 
         fiberCount++;
         if (fiberCount == 5)
         {
+            THHeightManager.Instance.AddHeight(THGameSetting.Instance.autoFeverHeight, FIBER_TIME);
             isFiberTime = true;
+
             UpdateFiberBar(()=> {
                 LeanTween.scaleX(gauageBar.gameObject, 0, FIBER_TIME).setOnComplete(() => {
                     isFiberTime = false;

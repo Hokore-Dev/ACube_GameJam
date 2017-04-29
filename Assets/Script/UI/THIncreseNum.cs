@@ -32,6 +32,13 @@ public class THIncreseNum : MonoBehaviour {
         StartCoroutine("CountTo", target);
     }
 
+    public void StartIncreseNum(int target, float duration)
+    {
+        this.duration = duration;
+        StopCoroutine("CountTo");
+        StartCoroutine("CountTo", target);
+    }
+
     private void OnGUI()
     {
         numText.text = currentValue.ToString() + addString;
@@ -48,4 +55,5 @@ public class THIncreseNum : MonoBehaviour {
         }
         currentValue = target;
     }
+
 }
