@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     FiberBar fiberBar;
 
+    [SerializeField]
+    CanvasGroup toMain;
+
+    [SerializeField]
+    CanvasGroup fadebox;
+
+    [SerializeField]
+    Text score;
+
+    [SerializeField]
+    Image loading;
 
     public enum EState
     {
@@ -42,11 +54,11 @@ public class Player : MonoBehaviour
         // 게임 베이스 타임 시작        
         THHPManager.Instance.HPDamageStart();
 
-        characterRenderer.transform.localPosition = new Vector3(0, -0.5f, 0);
+        characterRenderer.transform.localPosition = new Vector3(0, 0.1f, 0);
         fiberBar.gameObject.SetActive(true);
         animation.StartAnimation(characterRenderer, (int)EState.Game, 0.2f, null, true);
         gameEngine.SetCubicRandomPosition();
-        LeanTween.moveY(this.gameObject, -1.0f, 3).setEaseOutSine();
+        LeanTween.moveY(this.gameObject, -0.4f, 3).setEaseOutSine();
     }
 
     public void SetState(EState state)
@@ -54,10 +66,21 @@ public class Player : MonoBehaviour
         switch (state)
         {
             case EState.Start:
-                LeanTween.moveY(this.gameObject, 1.5f, 0.27f);
+                //LeanTween.moveY(this.gameObject, 1.5f, 0.27f);
                 animation.StartAnimation(characterRenderer, (int)EState.Start, 0.1f, ()=>
                 {
-                    SetGameSetting();
+                    fadebox.gameObject.SetActive(true);
+                    LeanTween.alphaCanvas(fadebox, 1, 0.2f).setOnComplete(() => {
+                        loading.gameObject.SetActive(true);
+                        LeanTween.alphaCanvas(fadebox, 0, 0.2f).setOnComplete(() => {
+                            fadebox.gameObject.SetActive(false);
+                            loading.gameObject.SetActive(true);
+                            LeanTween.alphaCanvas(loading.GetComponent<CanvasGroup>(), 0, 0.3f).setOnComplete(() => {
+                                loading.gameObject.SetActive(false);
+                                SetGameSetting();
+                            }).setDelay(1.0f);
+                        });
+                    });
                 }, false);
                 break;
             case EState.Finish:
@@ -65,6 +88,15 @@ public class Player : MonoBehaviour
                 animation.StartAnimation(characterRenderer,(int)EState.Finish, 0.1f,null,false);
                 LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
                     shake.MakeShake(10);
+
+                    toMain.gameObject.SetActive(true);
+                    LeanTween.alphaCanvas(toMain, 1, 0.4f).setDelay(0.7f);
+
+                    score.gameObject.SetActive(true);
+                    LeanTween.scale(score.gameObject, new Vector3(1, 1), 0.4f).setEaseInOutElastic();
+                    LeanTween.alphaCanvas(score.GetComponent<CanvasGroup>(), 1.0f, 0.4f).setOnComplete(() => {
+                        LeanTween.moveLocalY(score.gameObject, 50, 0.4f);
+                    });
                 });
                 break;
             case EState.Fly:

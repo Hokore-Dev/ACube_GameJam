@@ -7,7 +7,7 @@ public class FiberBar : MonoBehaviour
     [SerializeField]
     SpriteRenderer gauageBar;
 
-    private const float FIBER_TIME = 2.0f;
+    private const float FIBER_TIME = 1.0f;
     private int fiberCount = 4;
     public bool isFiberTime = false;
     private System.Action fiberTimeOutCallback = null;
@@ -52,7 +52,7 @@ public class FiberBar : MonoBehaviour
 
     private void UpdateFiberBar(System.Action callback)
     {
-        LeanTween.scaleX(gauageBar.gameObject, fiberCount * 0.4f, 0.1f).setOnComplete(() => {
+        LeanTween.scaleX(gauageBar.gameObject, fiberCount * 0.2f, 0.1f).setOnComplete(() => {
             if (callback != null)
                 callback();
         });

@@ -28,13 +28,13 @@ public class GameEngine : MonoBehaviour
     GameObject hpBarUI;
 
     [SerializeField]
-    CanvasGroup touchToStart;
-
-    [SerializeField]
     THIncreseNum txtMeter;
 
     [SerializeField]
     CanvasGroup fadeBox;
+
+    [SerializeField]
+    HitBossPanel bossPanel;
 
     [SerializeField]
     CameraController cameraController;
@@ -96,9 +96,12 @@ public class GameEngine : MonoBehaviour
             {
                 cubic[i].RemoveAnim(false);
             }
-            txtMeter.StartIncreseNum(0);
-            player.SetState(Player.EState.Finish);
-            hpBarUI.SetActive(false);
+
+            bossPanel.gameObject.SetActive(true);
+            LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
+                .setOnComplete(() => {
+                    bossPanel.StartUserBar();
+                });
         }
         else if (type == EType.Break || type == EType.Boss)
         {
@@ -162,10 +165,13 @@ public class GameEngine : MonoBehaviour
         {
             cubic[i].RemoveAnim(false);
         }
-        THHeightManager.Instance.Drop();
-        //txtMeter.StartIncreseNum(0);
-        player.SetState(Player.EState.Finish);
-        hpBarUI.SetActive(false);
+        //THHeightManager.Instance.Drop();
+
+        bossPanel.gameObject.SetActive(true);
+        LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
+            .setOnComplete(() => {
+                bossPanel.StartUserBar();
+            });
     }
 
     private void Start()
@@ -182,8 +188,23 @@ public class GameEngine : MonoBehaviour
         hpBarUI.gameObject.SetActive(true);
         THHPManager.Instance.Init();
 
+        bossPanel.callback = () =>
+        {
+            player.SetState(Player.EState.Finish);
+            hpBarUI.SetActive(false);
+        };
+
         LeanTween.alphaCanvas(fadeBox, 0, 0.5f).setOnComplete(() => {
             fadeBox.gameObject.SetActive(false);
+        });
+    }
+
+    public void GameEnd()
+    {
+        fadeBox.gameObject.SetActive(true);
+        LeanTween.alphaCanvas(fadeBox, 1, 0.5f).setOnComplete(() =>
+        {
+            SceneManager.LoadScene("Dev_InGameLogic");
         });
     }
 
@@ -199,15 +220,11 @@ public class GameEngine : MonoBehaviour
                 player.SetState(Player.EState.Start);
 
                 LeanTween.moveLocalY(gameUI, 0, 0.5f);
-                LeanTween.alphaCanvas(touchToStart.GetComponent<CanvasGroup>(), 0, 0.5f).setOnComplete(() => { touchToStart.gameObject.SetActive(false); });
                 LeanTween.alphaCanvas(gameUI.GetComponent<CanvasGroup>(), 1, 1.0f);
             }
-            else if (dieFlow)
+            else if (bossPanel.gameObject.activeSelf)
             {
-                fadeBox.gameObject.SetActive(true);
-                LeanTween.alphaCanvas(fadeBox, 1, 0.5f).setOnComplete(() => {
-                    SceneManager.LoadScene("Dev_InGameLogic");
-                });
+                bossPanel.ShowLevel(bossPanel.CheckTime());
             }
         }
     }
