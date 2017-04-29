@@ -108,6 +108,7 @@
     <Compile Include="Assets\Script\Cubic\Cubic.cs" />
     <Compile Include="Assets\Script\Cubic\ExplodeController.cs" />
     <Compile Include="Assets\Script\Game\CameraController.cs" />
+    <Compile Include="Assets\Script\Game\FeverAniBG.cs" />
     <Compile Include="Assets\Script\Game\GameEngine.cs" />
     <Compile Include="Assets\Script\Game\HitBossPanel.cs" />
     <Compile Include="Assets\Script\Game\THGameSetting.cs" />

@@ -12,7 +12,7 @@ public class THCloud : MonoBehaviour {
     bool move = false;
 	// Use this for initialization
 	void Start () {
-        speed = Random.Range(5f, 12f);
+        speed = Random.Range(10f, 20f);
     }
 
     public void InitPosition()
@@ -30,7 +30,7 @@ public class THCloud : MonoBehaviour {
         }
         else
         {
-            transform.Translate(Vector3.down * speed * Time.deltaTime * 0.05f);
+            transform.Translate(Vector3.down * speed * Time.deltaTime * 0.01f);
         }
 	}
 
