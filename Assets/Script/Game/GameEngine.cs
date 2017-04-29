@@ -101,11 +101,13 @@ public class GameEngine : MonoBehaviour
             }
             explode_bgm.Play();
 
-            bossPanel.gameObject.SetActive(true);
-            LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
-                .setOnComplete(() => {
-                    bossPanel.StartUserBar();
-                });
+            player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
+                bossPanel.gameObject.SetActive(true);
+                LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
+                    .setOnComplete(() => {
+                        bossPanel.StartUserBar();
+                    });
+            }, false);
         }
         else if (type == EType.Break || type == EType.Boss)
         {
@@ -176,11 +178,13 @@ public class GameEngine : MonoBehaviour
         //THHeightManager.Instance.Drop();
         THSkyBackground.Instance.StopBackground();
 
-        bossPanel.gameObject.SetActive(true);
-        LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
-            .setOnComplete(() => {
-                bossPanel.StartUserBar();
-            });
+        player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
+            bossPanel.gameObject.SetActive(true);
+            LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
+                .setOnComplete(() => {
+                    bossPanel.StartUserBar();
+                });
+        }, false);
     }
 
     private void Start()
@@ -232,7 +236,7 @@ public class GameEngine : MonoBehaviour
                 //txtMeter.StartIncreseNum(meter += 300);
                 player.SetState(Player.EState.Start);
 
-                LeanTween.moveLocalY(gameUI, 0, 0.5f);
+                LeanTween.moveLocalY(gameUI, 1030, 0.5f);
                 LeanTween.alphaCanvas(gameUI.GetComponent<CanvasGroup>(), 1, 1.0f);
             }
             else if (bossPanel.gameObject.activeSelf)

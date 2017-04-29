@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 926c9b36cebc24c4ca6e034140af1f88
+timeCreated: 1493482113
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Makgeolli
+  fontNames:
+  - Makgeolli
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
