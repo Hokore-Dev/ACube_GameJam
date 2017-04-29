@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class THGametimeManager : MRSingleton<THGametimeManager> {
 
+    float currentHP = 0;
     float currentTime = 0f;
-    public float CurrentTime { get { return currentTime;  }  }
+    public int CurrentHP { get { return (int)currentHP;  }  }
 
     public THGageController UIGametimeGage;
     
@@ -25,39 +26,33 @@ public class THGametimeManager : MRSingleton<THGametimeManager> {
 	void Update () {
         if(state == State.RUN)
         {
-            currentTime -= Time.deltaTime;
-            if(currentTime <= 0f)
+            currentHP -= (THGameSetting.Instance.damageForPerSecond * Time.deltaTime);
+            if(currentHP <= 0f)
             {
-                currentTime = 0f;               
+                currentHP = 0f;               
                 //게임 오버처리 필요..
             }
-            UIGametimeGage.SetValue(currentTime);
+            UIGametimeGage.SetValue(currentHP);
         }
 	}
 
     public void Init()
     {
-        currentTime = THGameSetting.Instance.gameTime;
-        UIGametimeGage.InitValue(THGameSetting.Instance.gameTime);
+        currentHP = THGameSetting.Instance.maxHP;
+        UIGametimeGage.InitValue(currentHP);
         state = State.RUN;
+    }
+
+    public void Stop()
+    {
+        state = State.READY;
     }
 
     public void DidCombo(int comboCount)    //콤보 수행시 시간 올라감
     {
-        switch(comboCount)
-        { 
-            case 1:
-                currentTime += THGameSetting.Instance.addTimeToCombo1;                
-                break;
-            case 2:
-                currentTime += THGameSetting.Instance.addTimeToCombo2;
-                break;
-            case 3:
-                currentTime += THGameSetting.Instance.addTimeToCombo3;
-                break;
-        }
-        currentTime = Mathf.Clamp(currentTime, 0f, THGameSetting.Instance.gameTime);
-        UIGametimeGage.SetValue(currentTime);
+        currentHP += THGameSetting.Instance.healForCombo[comboCount];
+        currentHP = Mathf.Clamp(currentHP, 0f, THGameSetting.Instance.maxHP);
+        UIGametimeGage.SetValue(currentHP);
     }
 
 
