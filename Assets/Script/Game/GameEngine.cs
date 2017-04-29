@@ -101,6 +101,8 @@ public class GameEngine : MonoBehaviour
             }
             explode_bgm.Play();
 
+            THSkyBackground.Instance.StopBackground();
+
             player.controller.Show();
             player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
                 bossPanel.gameObject.SetActive(true);
