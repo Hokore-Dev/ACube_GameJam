@@ -42,6 +42,21 @@ public class Cubic : MonoBehaviour
                 .setRepeat(-1);
     }
 
+    public void MouseActive()
+    {
+                if (this.transform.parent.gameObject.activeSelf && !isAnimating)
+                {
+                    if (type == EType.Boss)
+                    {
+                        gameEngine.AddBreakCount(type, this.gameObject);
+                    }
+                    else
+                    {
+                        RemoveAnim(true);
+                    }
+                }
+    }
+
     public void SetType(EType type)
     {
         this.type = type;
@@ -62,7 +77,7 @@ public class Cubic : MonoBehaviour
             default:
                 break;
         }
-    }
+    } 
 
     public void Appear()
     {
@@ -91,20 +106,5 @@ public class Cubic : MonoBehaviour
             }
         });
         LeanTween.alpha(renderer.gameObject, 0, 0.1f);
-    }
-
-    private void OnMouseDown()
-    {
-        if (this.transform.parent.gameObject.activeSelf && !isAnimating)
-        {
-            if (type == EType.Boss)
-            {
-                gameEngine.AddBreakCount(type, this.gameObject);
-            }
-            else
-            {
-                RemoveAnim(true);
-            }
-        }
     }
 }

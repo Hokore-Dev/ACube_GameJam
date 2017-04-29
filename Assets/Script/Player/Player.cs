@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
     public ImageAnimation animation;
     private int meter = 0;
     int level = 1;
+    private bool block = false;
 
     private void Awake()
     {
@@ -92,6 +93,9 @@ public class Player : MonoBehaviour
                 }, false);
                 break;
             case EState.Finish:
+                if (block)
+                    return;
+                block = true;
                 fiberBar.gameObject.SetActive(false);
                 LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
                     shake.MakeShake(10);

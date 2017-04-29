@@ -244,6 +244,23 @@ public class GameEngine : MonoBehaviour
                 bossPanel.ShowLevel(bossPanel.CheckTime());
             }
         }
+        for (int k = 0;k < Input.touchCount;k++)
+        {
+            Touch touch = Input.GetTouch(k);
+            Collider2D collision = Physics2D.OverlapPoint((Camera.main.ScreenToWorldPoint(touch.position)));
+
+            if (collision) // Check if there is a collision, if collision != null
+            {
+                for (int i = 0; i < cubic.Length; i++)
+                {
+                    if (collision == cubic[i].GetComponent<Collider2D>())
+                    {
+                        cubic[i].MouseActive();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
