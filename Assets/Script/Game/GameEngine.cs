@@ -40,6 +40,9 @@ public class GameEngine : MonoBehaviour
     CameraController cameraController;
 
     [SerializeField]
+    AudioSource explode_bgm;
+
+    [SerializeField]
     Animator explode;
 
     const int SCREEN_WIDTH = 1440;
@@ -96,6 +99,7 @@ public class GameEngine : MonoBehaviour
             {
                 cubic[i].RemoveAnim(false);
             }
+            explode_bgm.Play();
 
             bossPanel.gameObject.SetActive(true);
             LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
@@ -122,6 +126,8 @@ public class GameEngine : MonoBehaviour
             explode.transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             explode.Rebind();
             explode.Play("Explosion");
+
+            explode_bgm.Play();
 
             if (shouldBreak == breakCount)
             {
