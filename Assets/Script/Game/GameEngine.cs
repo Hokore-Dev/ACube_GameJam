@@ -34,7 +34,7 @@ public class GameEngine : MonoBehaviour
     CanvasGroup fadeBox;
 
     [SerializeField]
-    HitBossPanel bossPanel;
+    public HitBossPanel bossPanel;
 
     [SerializeField]
     CameraController cameraController;
@@ -101,6 +101,7 @@ public class GameEngine : MonoBehaviour
             }
             explode_bgm.Play();
 
+            player.controller.Show();
             player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
                 bossPanel.gameObject.SetActive(true);
                 LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
@@ -178,6 +179,8 @@ public class GameEngine : MonoBehaviour
         //THHeightManager.Instance.Drop();
         THSkyBackground.Instance.StopBackground();
         THCloudManager.Instance.AllClear();
+
+        player.controller.Show();
 
         player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
             bossPanel.gameObject.SetActive(true);

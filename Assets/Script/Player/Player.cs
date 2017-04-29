@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     AudioSource jumpBGM;
 
+    [SerializeField]
+    public BossController controller;
+
     public enum EState
     {
         Ready,
@@ -95,6 +98,7 @@ public class Player : MonoBehaviour
             case EState.Finish:
                 if (block)
                     return;
+
                 block = true;
                 fiberBar.gameObject.SetActive(false);
                 LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
@@ -103,6 +107,7 @@ public class Player : MonoBehaviour
                     toMain.gameObject.SetActive(true);
                     LeanTween.alphaCanvas(toMain, 1, 0.4f).setDelay(0.7f);
 
+                    score.text = (meter + 100 * (500 - gameEngine.bossPanel.value)).ToString();
                     score.gameObject.SetActive(true);
                     LeanTween.scale(score.gameObject, new Vector3(1, 1), 0.4f).setEaseInOutElastic();
                     LeanTween.alphaCanvas(score.GetComponent<CanvasGroup>(), 1.0f, 0.4f).setOnComplete(() => {
