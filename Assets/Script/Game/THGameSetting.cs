@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class THGameSetting : MRSingleton<THGameSetting> {
 
-    public float gameTime = 3f;     //체공시간
+    public float gameTime = 5f;     //체공시간
 
     public float addTimeToCombo1 = 0.5f;    //1콤보시 추가시간
     public float addTimeToCombo2 = 1.5f;    //2콤보시 추가시간
