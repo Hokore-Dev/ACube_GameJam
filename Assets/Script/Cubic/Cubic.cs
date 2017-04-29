@@ -79,11 +79,13 @@ public class Cubic : MonoBehaviour
     public void RemoveAnim(bool touchRemove = true)
     {
         isAnimating = true;
-        LeanTween.scale(renderer.gameObject, new Vector3(0, 0, 1), 0.1f).setOnComplete(() => {
+        LeanTween.scale(renderer.gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setOnComplete(() => {
             this.transform.parent.gameObject.SetActive(false);
+            renderer.color = new Color(1, 1, 1, 1); 
             if (touchRemove)
                 gameEngine.AddBreakCount(type);
         });
+        LeanTween.alpha(renderer.gameObject, 0, 0.1f);
     }
 
     private void OnMouseDown()

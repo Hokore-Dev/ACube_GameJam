@@ -259,7 +259,7 @@ public class GameEngine : MonoBehaviour
         THGameSetting.Level level = THGameSetting.Instance.gameLevel[stage];
         int monsterCount = Random.Range(level.minBreakCount, level.maxBreakCount + 1);
         int bombCount    = Random.Range(level.minNoneBreakCount, level.maxNoneBreakCount + 1);
-        int feverCount   = level.forceFever ? 1 : 0;
+        int feverCount   = (stage % 3 == 2) ? 1 :0;
         bool bossFade    = (Random.Range(0, 100) > 30);
 
         int allcount = monsterCount + bombCount + feverCount;
