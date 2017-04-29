@@ -59,7 +59,10 @@ public class THSkyBackground : MRSingleton<THSkyBackground> {
     public void Scroll(float duration, int jumpHight)
     {
         float yPos = transform.position.y;
-        LeanTween.moveY(gameObject, yPos - (jumpHight / 500f), duration);
+        THCloudManager.Instance.StartCloud();
+        LeanTween.moveY(gameObject, yPos - (jumpHight / 500f), duration).setOnComplete(() => {
+            THCloudManager.Instance.StopCloud();
+        });
     }
 
     public void StartBackground()

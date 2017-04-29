@@ -108,6 +108,7 @@
     <Compile Include="Assets\Script\Cubic\Cubic.cs" />
     <Compile Include="Assets\Script\Cubic\ExplodeController.cs" />
     <Compile Include="Assets\Script\Game\CameraController.cs" />
+    <Compile Include="Assets\Script\Game\FeverAniBG.cs" />
     <Compile Include="Assets\Script\Game\GameEngine.cs" />
     <Compile Include="Assets\Script\Game\HitBossPanel.cs" />
     <Compile Include="Assets\Script\Game\THGameSetting.cs" />
@@ -121,6 +122,8 @@
     <Compile Include="Assets\Script\Player\Player.cs" />
     <Compile Include="Assets\Script\Shake.cs" />
     <Compile Include="Assets\Script\Test\TestGameManager.cs" />
+    <Compile Include="Assets\Script\UI\THCloud.cs" />
+    <Compile Include="Assets\Script\UI\THCloudManager.cs" />
     <Compile Include="Assets\Script\UI\THGageController.cs" />
     <Compile Include="Assets\Script\UI\THHPGage.cs" />
     <Compile Include="Assets\Script\UI\THHPImageGageController.cs" />

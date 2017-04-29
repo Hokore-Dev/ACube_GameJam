@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BossBackground
+    uniqueID: 2033790655
+    locked: 0
   - name: Character
     uniqueID: 2538892373
     locked: 0
