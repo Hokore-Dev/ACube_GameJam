@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     FiberBar fiberBar;
 
+
     public enum EState
     {
         Ready,
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     private EState state = EState.Ready;
     private SpriteRenderer characterRenderer;
     private ImageAnimation animation;
+    private int meter = 0;
 
     private void Awake()
     {
@@ -58,9 +60,10 @@ public class Player : MonoBehaviour
                 }, false);
                 break;
             case EState.Finish:
-                animation.StartAnimation(characterRenderer,0, 0.1f,null,true);
-                LeanTween.moveLocalY(this.gameObject, -3, 0.5f).setEaseInBack().setOnComplete(() => {
-                    shake.MakeShake(5);
+                fiberBar.gameObject.SetActive(false);
+                animation.StartAnimation(characterRenderer,(int)EState.Finish, 0.1f,null,false);
+                LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
+                    shake.MakeShake(10);
                 });
                 break;
             case EState.Fly:

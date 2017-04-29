@@ -19,7 +19,6 @@ public class THIncreseNum : MonoBehaviour {
     // Use this for initialization
     void Start () {
         numText = GetComponent<Text>();
-        StartIncreseNum(100);
 	}
 	
 	// Update is called once per frame

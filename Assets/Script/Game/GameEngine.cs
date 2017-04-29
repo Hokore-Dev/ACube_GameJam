@@ -17,6 +17,9 @@ public class GameEngine : MonoBehaviour
     [SerializeField]
     Button fiberButton;
 
+    [SerializeField]
+    THIncreseNum txtMeter;
+
     // -2.5 ~ 3 (55)
     // 0 ~ -5 (50)
     private Vector2 START_POSITION = new Vector2(-2.5f, 0);
@@ -25,8 +28,14 @@ public class GameEngine : MonoBehaviour
     List<int> _numberIndex          = new List<int>();
     List<int> _topNumberList = new List<int>();
 
+    int meter = 0;
     int breakCount = 0;
     int score = 0;
+
+    public void FeberTouch()
+    {
+        txtMeter.StartIncreseNum(meter += 100);
+    }
 
     /// <summary>
     /// 큐빅을 터트렸을때
@@ -57,7 +66,7 @@ public class GameEngine : MonoBehaviour
     {
         bool isFiber = false;
         // 최상위 숫자 3개를 모두 찾았을 때
-        if (_topNumberList.Count == 0)
+        //if (_topNumberList.Count == 0)
         {
             isFiber = fiberBar.AddFiberCount();
         }
@@ -71,11 +80,16 @@ public class GameEngine : MonoBehaviour
             {
                 cubic[i].RemoveAnim(false);
             }
+            txtMeter.StartIncreseNum(0);
+            player.SetState(Player.EState.Finish);
+        }
+        else
+        {
+            txtMeter.StartIncreseNum(meter += score);
+            player.SetState(Player.EState.Fly);
         }
         this.score = 0;
         breakCount = 0;
-
-        player.SetState(Player.EState.Fly);
     }
 
     private void Start()
@@ -107,6 +121,7 @@ public class GameEngine : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
+            txtMeter.StartIncreseNum(meter += 300);
             player.SetState(Player.EState.Start);
         }
     }

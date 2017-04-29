@@ -9,7 +9,7 @@ public class Cubic : MonoBehaviour {
     [SerializeField]
     GameEngine gameEngine;
 
-    private const float SCALE_VALUE = 0.4f;
+    private const float SCALE_VALUE = 0.5f;
     private const int FONT_SIZE = 70;
 
     private SpriteRenderer renderer;
