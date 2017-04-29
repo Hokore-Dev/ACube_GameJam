@@ -49,8 +49,4 @@ public class THIncreseNum : MonoBehaviour {
         }
         currentValue = target;
     }
-
-
-
-
 }

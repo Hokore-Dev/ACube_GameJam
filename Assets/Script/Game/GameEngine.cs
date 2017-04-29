@@ -18,8 +18,8 @@ public class GameEngine : MonoBehaviour
     Button fiberButton;
 
     // -2.5 ~ 3 (55)
-    // 1 ~ -5 (60)
-    private Vector2 START_POSITION = new Vector2(-2.5f, 1f);
+    // 0 ~ -5 (50)
+    private Vector2 START_POSITION = new Vector2(-2.5f, 0);
 
     List<Vector2> _positionIndex    = new List<Vector2>();
     List<int> _numberIndex          = new List<int>();
@@ -43,32 +43,39 @@ public class GameEngine : MonoBehaviour
         }
         if (breakCount == 3)
         {
-            bool isFiber = false;
-            // 최상위 숫자 3개를 모두 찾았을 때
-            if (_topNumberList.Count == 0)
+            for (int i = 0; i < cubic.Length; i++)
             {
-                isFiber = fiberBar.AddFiberCount();
+                cubic[i].RemoveAnim(false);
             }
-
-            this.score = 0;
-            breakCount = 0;
-            if (isFiber)
-            {
-                for (int i = 0; i < cubic.Length; i++)
-                {
-                    cubic[i].RemoveAnim(false);
-                }
-                fiberButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                for (int i = 0; i < cubic.Length; i++)
-                {
-                    cubic[i].RemoveAnim(false);
-                }
-            }
-            player.SetState(Player.EState.Fly);
         }
+    }
+
+    /// <summary>
+    /// 인게임 게이지가 모두 소모할때
+    /// </summary>
+    public void EndGameTime()
+    {
+        bool isFiber = false;
+        // 최상위 숫자 3개를 모두 찾았을 때
+        if (_topNumberList.Count == 0)
+        {
+            isFiber = fiberBar.AddFiberCount();
+        }
+        if (isFiber)
+        {
+            fiberButton.gameObject.SetActive(true);
+        }
+        if (breakCount < 3)
+        {
+            for (int i = 0; i < cubic.Length; i++)
+            {
+                cubic[i].RemoveAnim(false);
+            }
+        }
+        this.score = 0;
+        breakCount = 0;
+
+        player.SetState(Player.EState.Fly);
     }
 
     private void Start()
@@ -112,7 +119,7 @@ public class GameEngine : MonoBehaviour
     /// <returns></returns>
     Vector2 GetRealPosition(int x, int y)
     {
-        return new Vector2(-2.5f + (float)x / 10, 1 - (float)y / 10);
+        return new Vector2(-2.5f + (float)x / 10, 0 - (float)y / 10);
     }
 
     /// <summary>

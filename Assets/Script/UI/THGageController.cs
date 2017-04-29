@@ -9,6 +9,9 @@ public class THGageController : MonoBehaviour {
     protected Slider slider;
 
     [SerializeField]
+    private GameEngine gameEngine;
+
+    [SerializeField]
     protected float maxValue;
 
     [SerializeField]
@@ -16,6 +19,9 @@ public class THGageController : MonoBehaviour {
 
     [SerializeField]
     protected float addValueDuration;
+
+    public bool isRun = false;
+    private bool callRequest = false;
 
 	// Use this for initialization
 	protected void Start () {
@@ -30,6 +36,7 @@ public class THGageController : MonoBehaviour {
 
     public void InitValue(float max_value, bool full_gage = true)
     {
+        callRequest = false;
         if (full_gage)
             InitValue(max_value, max_value);
         else
@@ -55,8 +62,16 @@ public class THGageController : MonoBehaviour {
     protected void OnGUI()
     {
         slider.value = currentValue / maxValue;
+        isRun = !(currentValue == 0);
         if (currentValue == 0)
+        {
+            if (!callRequest)
+            {
+                gameEngine.EndGameTime();
+                callRequest = true;
+            }
             slider.fillRect.gameObject.SetActive(false);
+        }
         else
             slider.fillRect.gameObject.SetActive(true);
     }

@@ -6,7 +6,6 @@ public class TestGameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        THGametimeManager.Instance.Init();
 	}
 	
 	// Update is called once per frame

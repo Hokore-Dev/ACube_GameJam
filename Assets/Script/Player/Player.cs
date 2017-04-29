@@ -36,11 +36,14 @@ public class Player : MonoBehaviour
 
     private void SetGameSetting()
     {
-        characterRenderer.transform.localPosition = new Vector3(0, 0f, 0);
+        // 게임 베이스 타임 시작
+        THGametimeManager.Instance.Init();
+
+        characterRenderer.transform.localPosition = new Vector3(0, -0.5f, 0);
         fiberBar.gameObject.SetActive(true);
         animation.StartAnimation(characterRenderer, (int)EState.Game, 0.2f, null, true);
         gameEngine.SetCubicRandomPosition();
-        LeanTween.moveY(this.gameObject, -0.5f, 3).setEaseOutSine();
+        LeanTween.moveY(this.gameObject, -1.0f, 3).setEaseOutSine();
     }
 
     public void SetState(EState state)
