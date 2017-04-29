@@ -28,6 +28,9 @@ public class GameEngine : MonoBehaviour
     GameObject hpBarUI;
 
     [SerializeField]
+    CanvasGroup touchToStart;
+
+    [SerializeField]
     THIncreseNum txtMeter;
 
     [SerializeField]
@@ -35,6 +38,9 @@ public class GameEngine : MonoBehaviour
 
     [SerializeField]
     CameraController cameraController;
+
+    [SerializeField]
+    Animator explode;
 
     const int SCREEN_WIDTH = 1440;
     const int SCREEN_HEIGHT = 2560;
@@ -68,6 +74,8 @@ public class GameEngine : MonoBehaviour
     bool startGame  = false;
     bool dieFlow    = false;
     bool clearFlow  = false;
+
+    Vector2 effectPosition = Vector2.zero;
 
     public void FeberTouch()
     {
@@ -106,6 +114,12 @@ public class GameEngine : MonoBehaviour
             }
 
             breakCount++;
+
+            explode.gameObject.SetActive(true);
+            explode.transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            explode.Rebind();
+            explode.Play("Explosion");
+
             if (shouldBreak == breakCount)
             {
                 clearFlow = true;
@@ -185,6 +199,7 @@ public class GameEngine : MonoBehaviour
                 player.SetState(Player.EState.Start);
 
                 LeanTween.moveLocalY(gameUI, 0, 0.5f);
+                LeanTween.alphaCanvas(touchToStart.GetComponent<CanvasGroup>(), 0, 0.5f).setOnComplete(() => { touchToStart.gameObject.SetActive(false); });
                 LeanTween.alphaCanvas(gameUI.GetComponent<CanvasGroup>(), 1, 1.0f);
             }
             else if (dieFlow)
