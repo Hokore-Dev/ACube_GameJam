@@ -13,6 +13,7 @@ public class HitBossPanel : MonoBehaviour {
 
     public System.Action callback = null;
     private bool check = false;
+    public float value = 0;
 
     public enum EState
     {
@@ -39,7 +40,7 @@ public class HitBossPanel : MonoBehaviour {
 
     public EState CheckTime()
     {
-        float value = Mathf.Abs(userBar.transform.localPosition.x - 0);
+        value = Mathf.Abs(userBar.transform.localPosition.x - 0);
         if (value < 50)
             return EState.Perfect;
         else if (value < 70)
