@@ -49,13 +49,14 @@ public class GameEngine : MonoBehaviour
     List<Vector2> _positionIndex    = new List<Vector2>();
     List<int> _numberIndex          = new List<int>();
 
-    int meter = 0;
-    int breakCount = 0;
-    int score = 0;
-
     int shouldBreak = 0;
-    bool dieFlow = false;
-    bool clearFlow = false;
+    int breakCount  = 0;
+    int meter = 0;
+    int score = 0;
+    int stage = 0;
+
+    bool dieFlow    = false;
+    bool clearFlow  = false;
 
     public void FeberTouch()
     {
@@ -66,9 +67,9 @@ public class GameEngine : MonoBehaviour
     /// 큐빅을 터트렸을때
     /// </summary>
     /// <param name="shape"></param>
-    public void AddBreakCount(bool isBreak)
+    public void AddBreakCount(EType type,GameObject go = null)
     {
-        if (!isBreak)
+        if (type == EType.NoneBreak)
         {
             dieFlow = true;
             for (int i = 0; i < cubic.Length; i++)
@@ -78,8 +79,19 @@ public class GameEngine : MonoBehaviour
             txtMeter.StartIncreseNum(0);
             player.SetState(Player.EState.Finish);
         }
-        else
+        else if (type == EType.Break || type == EType.Boss)
         {
+            // 보스는 최종 1개일때 파괴 가능하다
+            if (type == EType.Boss && (shouldBreak - 1) > breakCount)
+            {
+                return;
+            }
+            if (type == EType.Boss && go != null)
+            {
+                go.GetComponent<Cubic>().RemoveAnim(true);
+                return;                
+            }
+
             breakCount++;
             if (shouldBreak == breakCount)
             {
@@ -92,6 +104,20 @@ public class GameEngine : MonoBehaviour
                 breakCount = 0;
                 //txtMeter.StartIncreseNum(meter += 50);                
                 player.SetState(Player.EState.Fly);
+            }
+        }
+        else if (type == EType.Fever)
+        {
+            if (fiberBar.AddFiberCount())
+            {
+                for (int i = 0; i < cubic.Length; i++)
+                {
+                    cubic[i].RemoveAnim(false);
+                }
+                clearFlow = true;
+                breakCount = 0;
+                player.SetState(Player.EState.Fly);
+                fiberButton.gameObject.SetActive(true);
             }
         }
     }
@@ -228,21 +254,47 @@ public class GameEngine : MonoBehaviour
     /// </summary>
     public void SetCubicRandomPosition()
     {
+        shouldBreak = 0;
         clearFlow = false;
         _positionIndex.Clear();
         _numberIndex.Clear();
-        shouldBreak = 0;
 
-        for (int i = 0; i < cubic.Length; i++)
+        THGameSetting.Level level = THGameSetting.Instance.gameLevel[stage];
+        int monsterCount = Random.Range(level.minBreakCount, level.maxBreakCount + 1);
+        int bombCount    = Random.Range(level.minNoneBreakCount, level.maxNoneBreakCount + 1);
+        int feverCount   = (stage % 3 == 2) ? 1 :0;
+        bool bossFade    = (Random.Range(0, 100) > 30);
+
+        int allcount = monsterCount + bombCount + feverCount;
+        for (int i = 0; i < allcount; i++)
         {
             cubic[i].SetPosition(GetRandomPosition());
-            bool type = Random.Range(0, 2) == 1;
-            cubic[i].SetBreak(type);
-            if (type)
+            if (monsterCount > 0)
             {
+                if (bossFade)
+                {
+                    cubic[i].SetType(EType.Boss);
+                    bossFade = false;
+                }
+                else
+                {
+                    cubic[i].SetType(EType.Break);
+                }
                 shouldBreak++;
+                monsterCount--;
+            }
+            else if (bombCount > 0)
+            {
+                cubic[i].SetType(EType.NoneBreak);
+                bombCount--;
+            }
+            else if (feverCount > 0)
+            {
+                cubic[i].SetType(EType.Fever);
+                feverCount--;
             }
             cubic[i].Appear();
         }
+        stage++;
     }
 }
