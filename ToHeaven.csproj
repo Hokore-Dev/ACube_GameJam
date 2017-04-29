@@ -106,6 +106,7 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingAllCS.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\Script\Cubic\Cubic.cs" />
+    <Compile Include="Assets\Script\Game\CameraController.cs" />
     <Compile Include="Assets\Script\Game\GameEngine.cs" />
     <Compile Include="Assets\Script\Game\THGameSetting.cs" />
     <Compile Include="Assets\Script\Game\THHPManager.cs" />

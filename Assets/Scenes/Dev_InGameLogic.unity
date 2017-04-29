@@ -1169,6 +1169,11 @@ Prefab:
       propertyPath: UIGametimeGage
       value: 
       objectReference: {fileID: 1563349785}
+    - target: {fileID: 114986986453781892, guid: 83b21c822ee2bb74c8df9c4f0a8921ac,
+        type: 2}
+      propertyPath: UIHPGage
+      value: 
+      objectReference: {fileID: 1563349785}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83b21c822ee2bb74c8df9c4f0a8921ac, type: 2}
   m_IsPrefabParent: 0
@@ -2114,7 +2119,7 @@ GameObject:
   - component: {fileID: 1563349786}
   - component: {fileID: 1563349785}
   m_Layer: 5
-  m_Name: GameTime
+  m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2157,7 +2162,6 @@ MonoBehaviour:
   gameEngine: {fileID: 492321581}
   maxValue: 3
   currentValue: 3
-  addValueDuration: 0.1
   isRun: 0
 --- !u!114 &1563349786
 MonoBehaviour:
