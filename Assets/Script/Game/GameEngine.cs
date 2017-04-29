@@ -67,7 +67,7 @@ public class GameEngine : MonoBehaviour
     /// 큐빅을 터트렸을때
     /// </summary>
     /// <param name="shape"></param>
-    public void AddBreakCount(EType type)
+    public void AddBreakCount(EType type,GameObject go = null)
     {
         if (type == EType.NoneBreak)
         {
@@ -79,8 +79,19 @@ public class GameEngine : MonoBehaviour
             txtMeter.StartIncreseNum(0);
             player.SetState(Player.EState.Finish);
         }
-        else if (type == EType.Break)
+        else if (type == EType.Break || type == EType.Boss)
         {
+            // 보스는 최종 1개일때 파괴 가능하다
+            if (type == EType.Boss && (shouldBreak - 1) > breakCount)
+            {
+                return;
+            }
+            if (type == EType.Boss && go != null)
+            {
+                go.GetComponent<Cubic>().RemoveAnim(true);
+                return;                
+            }
+
             breakCount++;
             if (shouldBreak == breakCount)
             {
@@ -249,6 +260,7 @@ public class GameEngine : MonoBehaviour
         int monsterCount = Random.Range(level.minBreakCount, level.maxBreakCount + 1);
         int bombCount    = Random.Range(level.minNoneBreakCount, level.maxNoneBreakCount + 1);
         int feverCount   = level.forceFever ? 1 : 0;
+        bool bossFade    = (Random.Range(0, 100) > 30);
 
         int allcount = monsterCount + bombCount + feverCount;
         for (int i = 0; i < allcount; i++)
@@ -256,7 +268,15 @@ public class GameEngine : MonoBehaviour
             cubic[i].SetPosition(GetRandomPosition());
             if (monsterCount > 0)
             {
-                cubic[i].SetType(EType.Break);
+                if (bossFade)
+                {
+                    cubic[i].SetType(EType.Boss);
+                    bossFade = false;
+                }
+                else
+                {
+                    cubic[i].SetType(EType.Break);
+                }
                 shouldBreak++;
                 monsterCount--;
             }

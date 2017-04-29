@@ -90,7 +90,14 @@ public class Cubic : MonoBehaviour
     {
         if (this.transform.parent.gameObject.activeSelf && !isAnimating)
         {
-            RemoveAnim(true);
+            if (type == EType.Boss)
+            {
+                gameEngine.AddBreakCount(type, this.gameObject);
+            }
+            else
+            {
+                RemoveAnim(true);
+            }
         }
     }
 }
