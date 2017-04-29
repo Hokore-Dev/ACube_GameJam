@@ -13,6 +13,9 @@ public class FiberBar : MonoBehaviour
     [SerializeField]
     AudioSource mainBGM;
 
+    [SerializeField]
+     FeverAniBG bg;
+
     private const float FIBER_TIME = 3.0f;
     private int fiberCount = 4;
     public bool isFiberTime = false;
@@ -43,12 +46,11 @@ public class FiberBar : MonoBehaviour
        .setOnUpdate((float val) => {
            bgm.volume = val;
        });
-
+            bg.StartAni();
             THHeightManager.Instance.AddHeight(THGameSetting.Instance.autoFeverHeight, FIBER_TIME);
             isFiberTime = true;
 
             UpdateFiberBar(()=> {
-
 
                 LeanTween.scaleX(gauageBar.gameObject, 0, FIBER_TIME).setOnComplete(() => {
                     mainBGM.Play();
@@ -59,7 +61,7 @@ public class FiberBar : MonoBehaviour
                    if (val <= 0)
                        bgm.Stop();
                });
-
+                    bg.StopAni();
                     isFiberTime = false;
                     if (fiberTimeOutCallback != null)
                         fiberTimeOutCallback();

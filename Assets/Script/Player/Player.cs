@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     Image loading;
 
     [SerializeField]
+    ImageAnimation upAni;
+
+    [SerializeField]
     AudioSource jumpBGM;
 
     public enum EState
@@ -39,8 +42,8 @@ public class Player : MonoBehaviour
     }
 
     private EState state = EState.Ready;
-    private SpriteRenderer characterRenderer;
-    private ImageAnimation animation;
+    public SpriteRenderer characterRenderer;
+    public ImageAnimation animation;
     private int meter = 0;
     int level = 1;
 
@@ -90,7 +93,6 @@ public class Player : MonoBehaviour
                 break;
             case EState.Finish:
                 fiberBar.gameObject.SetActive(false);
-                animation.StartAnimation(characterRenderer,(int)EState.Finish, 0.1f,null,false);
                 LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
                     shake.MakeShake(10);
 
@@ -105,7 +107,8 @@ public class Player : MonoBehaviour
                 });
                 break;
             case EState.Fly:
-                
+                upAni.gameObject.SetActive(true);
+                upAni.StartAnimation(upAni.GetComponent<SpriteRenderer>(), 0, 0, null, true);
                 THHPManager.Instance.HPDamageStop();
                 animation.StartAnimation(characterRenderer, (int)EState.Fly, 0.2f, null, true);
 
@@ -119,7 +122,8 @@ public class Player : MonoBehaviour
                     LeanTween.moveLocalY(characterRenderer.gameObject, 7.5f, 0.6f)
                     .setDelay(0.05f)
                     .setEaseOutBack()
-                    .setOnComplete(() => {                        
+                    .setOnComplete(() => {
+                        upAni.gameObject.SetActive(false);
                         SetGameSetting();
                     });
                 }
