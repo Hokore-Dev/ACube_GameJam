@@ -1013,6 +1013,7 @@ MonoBehaviour:
   player: {fileID: 390765037}
   fiberBar: {fileID: 162875427}
   fiberButton: {fileID: 1838517675}
+  txtMeter: {fileID: 1910116174}
 --- !u!4 &492321582
 Transform:
   m_ObjectHideFlags: 0
