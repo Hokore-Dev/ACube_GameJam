@@ -37,6 +37,9 @@ public class Cubic : MonoBehaviour
     public void Awake()
     {
         renderer = this.transform.FindChild("Cubic").GetComponent<SpriteRenderer>();
+        LeanTween.rotateX(this.gameObject, 30, 0.9f)
+                .setEase(LeanTweenType.easeShake)
+                .setRepeat(-1);
     }
 
     public void SetType(EType type)
@@ -83,7 +86,9 @@ public class Cubic : MonoBehaviour
             this.transform.parent.gameObject.SetActive(false);
             renderer.color = new Color(1, 1, 1, 1); 
             if (touchRemove)
+            {
                 gameEngine.AddBreakCount(type);
+            }
         });
         LeanTween.alpha(renderer.gameObject, 0, 0.1f);
     }

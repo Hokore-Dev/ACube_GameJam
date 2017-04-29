@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +22,25 @@ public class GameEngine : MonoBehaviour
     Button fiberButton;
 
     [SerializeField]
+    GameObject gameUI;
+
+    [SerializeField]
+    GameObject hpBarUI;
+
+    [SerializeField]
+    CanvasGroup touchToStart;
+
+    [SerializeField]
     THIncreseNum txtMeter;
 
     [SerializeField]
+    CanvasGroup fadeBox;
+
+    [SerializeField]
     CameraController cameraController;
+
+    [SerializeField]
+    Animator explode;
 
     const int SCREEN_WIDTH = 1440;
     const int SCREEN_HEIGHT = 2560;
@@ -55,8 +71,11 @@ public class GameEngine : MonoBehaviour
     int score = 0;
     int stage = 0;
 
+    bool startGame  = false;
     bool dieFlow    = false;
     bool clearFlow  = false;
+
+    Vector2 effectPosition = Vector2.zero;
 
     public void FeberTouch()
     {
@@ -79,6 +98,7 @@ public class GameEngine : MonoBehaviour
             }
             txtMeter.StartIncreseNum(0);
             player.SetState(Player.EState.Finish);
+            hpBarUI.SetActive(false);
         }
         else if (type == EType.Break || type == EType.Boss)
         {
@@ -94,6 +114,12 @@ public class GameEngine : MonoBehaviour
             }
 
             breakCount++;
+
+            explode.gameObject.SetActive(true);
+            explode.transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            explode.Rebind();
+            explode.Play("Explosion");
+
             if (shouldBreak == breakCount)
             {
                 clearFlow = true;
@@ -139,6 +165,7 @@ public class GameEngine : MonoBehaviour
         THHeightManager.Instance.Drop();
         //txtMeter.StartIncreseNum(0);
         player.SetState(Player.EState.Finish);
+        hpBarUI.SetActive(false);
     }
 
     private void Start()
@@ -152,39 +179,36 @@ public class GameEngine : MonoBehaviour
         {
             cubic[i].transform.parent.gameObject.SetActive(false);
         }
-
-        Invoke("testc",1.5f);
+        hpBarUI.gameObject.SetActive(true);
         THHPManager.Instance.Init();
-    }
 
-    private void testc()
-    {
-        cameraController.ShowFarAway();
-        THHeightManager.Instance.AddHeight(300);
-        //txtMeter.StartIncreseNum(meter += 300);
-        player.SetState(Player.EState.Start);
+        LeanTween.alphaCanvas(fadeBox, 0, 0.5f).setOnComplete(() => {
+            fadeBox.gameObject.SetActive(false);
+        });
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonUp(0))
         {
-            SetCubicRandomPosition();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            for (int i = 0; i < cubic.Length; i++)
+            if (!startGame)
             {
-                cubic[i].RemoveAnim(false);
+                startGame = true;
+                cameraController.ShowFarAway();
+                txtMeter.StartIncreseNum(meter += 300);
+                player.SetState(Player.EState.Start);
+
+                LeanTween.moveLocalY(gameUI, 0, 0.5f);
+                LeanTween.alphaCanvas(touchToStart.GetComponent<CanvasGroup>(), 0, 0.5f).setOnComplete(() => { touchToStart.gameObject.SetActive(false); });
+                LeanTween.alphaCanvas(gameUI.GetComponent<CanvasGroup>(), 1, 1.0f);
             }
-            player.SetState(Player.EState.Finish);
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            cameraController.ShowFarAway();
-            THHeightManager.Instance.AddHeight(300);
-            //txtMeter.StartIncreseNum(meter += 300);
-            player.SetState(Player.EState.Start);
+            else if (dieFlow)
+            {
+                fadeBox.gameObject.SetActive(true);
+                LeanTween.alphaCanvas(fadeBox, 1, 0.5f).setOnComplete(() => {
+                    SceneManager.LoadScene("Dev_InGameLogic");
+                });
+            }
         }
     }
 
@@ -262,7 +286,7 @@ public class GameEngine : MonoBehaviour
         _positionIndex.Clear();
         _numberIndex.Clear();
 
-        THGameSetting.Level level = THGameSetting.Instance.gameLevel[stage];
+        THGameSetting.Level level = THGameSetting.Instance.gameLevel[THGameSetting.Instance.GetLevelPart(meter)];
         int monsterCount = Random.Range(level.minBreakCount, level.maxBreakCount + 1);
         int bombCount    = Random.Range(level.minNoneBreakCount, level.maxNoneBreakCount + 1);
         int feverCount   = (stage % 3 == 2) ? 1 :0;
