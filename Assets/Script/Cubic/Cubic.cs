@@ -2,23 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cubic : MonoBehaviour {
-    [SerializeField]
-    GUIText text;
-
+public class Cubic : MonoBehaviour
+{
     [SerializeField]
     GameEngine gameEngine;
+
+    [SerializeField]
+    Sprite noneBreakSprite;
+
+    [SerializeField]
+    Sprite breakSprite;
+
+    private bool canBreak;
 
     private const float SCALE_VALUE = 0.5f;
     private const int FONT_SIZE = 70;
 
     private SpriteRenderer renderer;
-    private int number = 0;
     private bool isAnimating = false;
 
     public void Awake()
     {
         renderer = this.transform.FindChild("Cubic").GetComponent<SpriteRenderer>();
+    }
+
+    public void SetBreak(bool isBreak)
+    {
+        canBreak = isBreak;
+        renderer.sprite = (canBreak) ? breakSprite : noneBreakSprite;
     }
 
     public void Appear()
@@ -31,28 +42,9 @@ public class Cubic : MonoBehaviour {
     {
         renderer.transform.localScale = new Vector3(0, 0, 1);
         this.transform.localPosition = vec2;
-        text.transform.localPosition = Camera.main.WorldToViewportPoint(transform.position);
-        text.color = new Color(0, 0, 0, 0); 
 
         float animationTime = 0.2f + Random.Range(0, 10) / 100 * 20;
         LeanTween.scale(renderer.gameObject, new Vector3(SCALE_VALUE, SCALE_VALUE, 1), animationTime).setEaseInOutQuad();
-        LeanTween.value(0f, 1f, animationTime).setEaseInOutQuad().setOnUpdate(
-            (float percent) =>
-            {
-                text.color = new Color(0, 0, 0, percent);
-            });
-
-        LeanTween.value(0f, FONT_SIZE, animationTime).setEaseInOutQuad().setOnUpdate(
-            (float percent) =>
-            {
-                text.fontSize = (int)percent;
-            });
-    }
-
-    public void SetNumber(int number)
-    {
-        this.number = number;
-        text.text = number.ToString();
     }
 
     public void RemoveAnim(bool touchRemove = true)
@@ -60,21 +52,9 @@ public class Cubic : MonoBehaviour {
         isAnimating = true;
         LeanTween.scale(renderer.gameObject, new Vector3(0, 0, 1), 0.1f).setOnComplete(() => {
             this.transform.parent.gameObject.SetActive(false);
-            if(touchRemove)
-                gameEngine.AddBreakCount(number);
+            if (touchRemove)
+                gameEngine.AddBreakCount(canBreak);
         });
-
-        LeanTween.value(1f, 0f, 0.1f).setEaseInOutQuad().setOnUpdate(
-            (float percent) =>
-            {
-                text.color = new Color(0, 0, 0, percent);
-            });
-
-        LeanTween.value(FONT_SIZE, 0, 0.1f).setEaseInOutQuad().setOnUpdate(
-            (float percent) =>
-            {
-                text.fontSize = (int)percent;
-            });
     }
 
     private void OnMouseDown()
