@@ -16,7 +16,7 @@ public class THGameSetting : MRSingleton<THGameSetting> {
     public int damageForLevel = 3;
 
     [Header("1몹당 상승높이")]
-    public int heightPerKillMob = 100;
+    public int heightPerKillMob = 150;
 
     [Header("뛰어오르는 시간")]
     public float heightMotionTime = 1.0f;
@@ -29,18 +29,33 @@ public class THGameSetting : MRSingleton<THGameSetting> {
         public int minNoneBreakCount;
         public bool forceFever = false;
     }
+    
+    public int GetLevelPart(int meter)
+    {
+        if (meter >= 0 && meter < 2500)
+            return 0;
+        if (meter >= 2500 && meter < 5000)
+            return 1;
+        if (meter >= 5000 && meter < 10000)
+            return 2;
+        if (meter >= 10000 && meter < 30000)
+            return 3;
+        if (meter >= 30000)
+            return 4;
+        return 1;
+    }
 
     public List<Level> gameLevel = new List<Level>()
     {
         new Level() {   // Lv 1
-            maxBreakCount = 5,
+            maxBreakCount = 4,
             minBreakCount = 3,
             maxNoneBreakCount = 3,
             minNoneBreakCount = 3
         },
         new Level() {   // Lv 2
-            maxBreakCount = 6,
-            minBreakCount = 5,
+            maxBreakCount = 5,
+            minBreakCount = 4,
             maxNoneBreakCount = 4,
             minNoneBreakCount = 3
         },
