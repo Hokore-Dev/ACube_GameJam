@@ -41,6 +41,7 @@ public class FiberBar : MonoBehaviour
         {
             mainBGM.Stop();
             bgm.Play();
+            THSkyBackground.Instance.StartFever();
             LeanTween.value(bgm.gameObject, 0, 1.0f, 0.3f)
        .setEase(LeanTweenType.linear)
        .setOnUpdate((float val) => {
@@ -63,6 +64,7 @@ public class FiberBar : MonoBehaviour
                });
                     bg.StopAni();
                     isFiberTime = false;
+                    THSkyBackground.Instance.EndFever();
                     if (fiberTimeOutCallback != null)
                         fiberTimeOutCallback();
                 });

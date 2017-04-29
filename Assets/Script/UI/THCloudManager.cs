@@ -83,9 +83,9 @@ public class THCloudManager : MRSingleton<THCloudManager> {
 
     public void AllClear()
     {
-        for (int i = transform.childCount; i >= 0; i--)
+        foreach (Transform child in transform)
         {
-            Destroy(transform.GetChild(i).gameObject);
+            GameObject.Destroy(child.gameObject);
         }
     }
 

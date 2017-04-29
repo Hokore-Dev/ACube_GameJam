@@ -177,6 +177,7 @@ public class GameEngine : MonoBehaviour
         }
         //THHeightManager.Instance.Drop();
         THSkyBackground.Instance.StopBackground();
+        THCloudManager.Instance.AllClear();
 
         player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
             bossPanel.gameObject.SetActive(true);
