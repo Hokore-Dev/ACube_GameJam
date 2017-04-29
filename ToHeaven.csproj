@@ -117,6 +117,7 @@
     <Compile Include="Assets\Script\Shake.cs" />
     <Compile Include="Assets\Script\Test\TestGameManager.cs" />
     <Compile Include="Assets\Script\UI\THGageController.cs" />
+    <Compile Include="Assets\Script\UI\THHPGage.cs" />
     <Compile Include="Assets\Script\UI\THIncreseNum.cs" />
     <Compile Include="Assets\SingletonController.cs" />
   </ItemGroup>
