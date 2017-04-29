@@ -160,7 +160,8 @@ public class GameEngine : MonoBehaviour
     private void testc()
     {
         cameraController.ShowFarAway();
-        txtMeter.StartIncreseNum(meter += 300);
+        THHeightManager.Instance.AddHeight(300);
+        //txtMeter.StartIncreseNum(meter += 300);
         player.SetState(Player.EState.Start);
     }
 
@@ -181,7 +182,8 @@ public class GameEngine : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.C))
         {
             cameraController.ShowFarAway();
-            txtMeter.StartIncreseNum(meter += 300);
+            THHeightManager.Instance.AddHeight(300);
+            //txtMeter.StartIncreseNum(meter += 300);
             player.SetState(Player.EState.Start);
         }
     }
