@@ -1174,6 +1174,11 @@ Prefab:
       propertyPath: UIHPGage
       value: 
       objectReference: {fileID: 1563349785}
+    - target: {fileID: 114658668705732574, guid: 83b21c822ee2bb74c8df9c4f0a8921ac,
+        type: 2}
+      propertyPath: uiHeight
+      value: 
+      objectReference: {fileID: 1910116174}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83b21c822ee2bb74c8df9c4f0a8921ac, type: 2}
   m_IsPrefabParent: 0

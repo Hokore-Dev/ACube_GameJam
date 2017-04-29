@@ -7,19 +7,16 @@ public class THHeightManager : MRSingleton<THHeightManager> {
     int currentHeight = 0;
     public int CurrentHeight { get { return currentHeight; } }
     public THIncreseNum uiHeight;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    public void DidCombo(int comboCount)    //콤보 수행시 시간 올라감
+    public void SetHeight(int height_value)
     {
-        currentHeight += THGameSetting.Instance.heighForCombo[comboCount];
+        currentHeight = height_value;
+        uiHeight.StartIncreseNum(currentHeight);
+    }
+
+    public void AddHeight(int add_height_value)
+    {
+        currentHeight += add_height_value;
         uiHeight.StartIncreseNum(currentHeight);
     }
 

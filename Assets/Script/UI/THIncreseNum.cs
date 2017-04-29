@@ -12,8 +12,7 @@ public class THIncreseNum : MonoBehaviour {
     [SerializeField]
     private string addString = "";
 
-    [SerializeField]
-    private float duration = 0.5f;
+    float duration = 0.0f;
 
     Text numText;
     // Use this for initialization
@@ -26,9 +25,9 @@ public class THIncreseNum : MonoBehaviour {
 		
 	}
 
-    public void StartIncreseNum(int target, float duration = 0.5f)
+    public void StartIncreseNum(int target)
     {
-        this.duration = duration;
+        this.duration = THGameSetting.Instance.heightMotionTime;
         StopCoroutine("CountTo");
         StartCoroutine("CountTo", target);
     }

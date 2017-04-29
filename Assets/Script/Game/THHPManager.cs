@@ -6,10 +6,11 @@ public class THHPManager : MRSingleton<THHPManager> {
 
     float currentHP = 0;
     float currentTime = 0f;
+
     public int CurrentHP { get { return (int)currentHP;  }  }
 
-    public THGageController UIHPGage;
-    
+    public THImageGageController UIHPGage;
+
     enum State
     {
         READY,
@@ -40,23 +41,22 @@ public class THHPManager : MRSingleton<THHPManager> {
     {
         currentHP = THGameSetting.Instance.maxHP;
         UIHPGage.InitValue(currentHP);
+    }
+
+    public void HPDamageStart()
+    {
         state = State.RUN;
     }
 
-    public void Stop()
+    public void HPDamageStop()
     {
         state = State.READY;
     }
 
-    public void DidCombo(int comboCount)    //콤보 수행시 시간 올라감
+    public void SetHPToLevel(int level)
     {
-        currentHP += THGameSetting.Instance.healForCombo[comboCount];
-        currentHP = Mathf.Clamp(currentHP, 0f, THGameSetting.Instance.maxHP);
-        UIHPGage.SetValue(currentHP, 0.5f);
+        currentHP = THGameSetting.Instance.maxHP;
+        currentHP -= THGameSetting.Instance.damageForLevel * (level - 1);
+        UIHPGage.SetValue(currentHP, THGameSetting.Instance.heightMotionTime);
     }
-
-
-
-
-
 }

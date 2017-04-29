@@ -88,8 +88,9 @@ public class GameEngine : MonoBehaviour
                 {
                     cubic[i].RemoveAnim(false);
                 }
+                THHeightManager.Instance.AddHeight(THGameSetting.Instance.heightPerKillMob * breakCount);
                 breakCount = 0;
-                txtMeter.StartIncreseNum(meter += 50);
+                //txtMeter.StartIncreseNum(meter += 50);                
                 player.SetState(Player.EState.Fly);
             }
         }
@@ -108,7 +109,8 @@ public class GameEngine : MonoBehaviour
         {
             cubic[i].RemoveAnim(false);
         }
-        txtMeter.StartIncreseNum(0);
+        THHeightManager.Instance.Drop();
+        //txtMeter.StartIncreseNum(0);
         player.SetState(Player.EState.Finish);
     }
 
@@ -125,6 +127,7 @@ public class GameEngine : MonoBehaviour
         }
 
         Invoke("testc",1.5f);
+        THHPManager.Instance.Init();
     }
 
     private void testc()

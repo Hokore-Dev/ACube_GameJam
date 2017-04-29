@@ -27,19 +27,20 @@ public class Player : MonoBehaviour
     private SpriteRenderer characterRenderer;
     private ImageAnimation animation;
     private int meter = 0;
+    int level = 1;
 
     private void Awake()
     {
         animation = GetComponent<ImageAnimation>();
         characterRenderer = GetComponent<SpriteRenderer>();
 
-        animation.StartAnimation(characterRenderer, (int)EState.Ready, 0.2f, null, true);
+        animation.StartAnimation(characterRenderer, (int)EState.Ready, 0.2f, null, true);        
     }
 
     private void SetGameSetting()
     {
-        // 게임 베이스 타임 시작
-        THHPManager.Instance.Init();
+        // 게임 베이스 타임 시작        
+        THHPManager.Instance.HPDamageStart();
 
         characterRenderer.transform.localPosition = new Vector3(0, -0.5f, 0);
         fiberBar.gameObject.SetActive(true);
@@ -67,14 +68,20 @@ public class Player : MonoBehaviour
                 });
                 break;
             case EState.Fly:
+                
+                THHPManager.Instance.HPDamageStop();
                 animation.StartAnimation(characterRenderer, (int)EState.Fly, 0.2f, null, true);
+
+                level += 1; //레벨 업
+                THHPManager.Instance.SetHPToLevel(level);
+
                 if (!fiberBar.isFiberTime)
                 {
                     fiberBar.gameObject.SetActive(false);
                     LeanTween.moveLocalY(characterRenderer.gameObject, 8.0f, 1.0f)
                     .setDelay(0.1f)
                     .setEaseInBack()
-                    .setOnComplete(() => {
+                    .setOnComplete(() => {                        
                         SetGameSetting();
                     });
                 }
