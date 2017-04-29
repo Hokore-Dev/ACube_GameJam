@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class GameEngine : MonoBehaviour
 {
     [SerializeField]
+    Camera camera;
+
+    [SerializeField]
     Cubic[] cubic;
 
     [SerializeField]
@@ -20,17 +23,39 @@ public class GameEngine : MonoBehaviour
     [SerializeField]
     THIncreseNum txtMeter;
 
+    [SerializeField]
+    CameraController cameraController;
+
+    const int SCREEN_WIDTH = 1440;
+    const int SCREEN_HEIGHT = 2560;
+
+    /// <summary>
+    /// 스크린 크기에 맞게 화면 리사이즈
+    /// </summary>
+    public void SetResolution()
+    {
+        Screen.SetResolution(1440, 2560,true);
+        if (Screen.width / Screen.height < SCREEN_WIDTH / SCREEN_HEIGHT)
+        {
+            float width = (SCREEN_HEIGHT * 0.5f) / SCREEN_HEIGHT * SCREEN_WIDTH;
+            camera.orthographicSize = width / Screen.width * Screen.height;
+        }
+    }
+
     // -2.5 ~ 3 (55)
     // 0 ~ -5 (50)
     private Vector2 START_POSITION = new Vector2(-2.5f, 0);
 
     List<Vector2> _positionIndex    = new List<Vector2>();
     List<int> _numberIndex          = new List<int>();
-    List<int> _topNumberList = new List<int>();
 
     int meter = 0;
     int breakCount = 0;
     int score = 0;
+
+    int shouldBreak = 0;
+    bool dieFlow = false;
+    bool clearFlow = false;
 
     public void FeberTouch()
     {
@@ -40,42 +65,12 @@ public class GameEngine : MonoBehaviour
     /// <summary>
     /// 큐빅을 터트렸을때
     /// </summary>
-    /// <param name="score"></param>
-    public void AddBreakCount(int score)
+    /// <param name="shape"></param>
+    public void AddBreakCount(bool isBreak)
     {
-        breakCount++;
-        this.score += score;
-
-        if (_topNumberList.Contains(score))
+        if (!isBreak)
         {
-            _topNumberList.Remove(score);
-        }
-        if (breakCount == 3)
-        {
-            for (int i = 0; i < cubic.Length; i++)
-            {
-                cubic[i].RemoveAnim(false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 인게임 게이지가 모두 소모할때
-    /// </summary>
-    public void EndGameTime()
-    {
-        bool isFiber = false;
-        // 최상위 숫자 3개를 모두 찾았을 때
-        //if (_topNumberList.Count == 0)
-        {
-            isFiber = fiberBar.AddFiberCount();
-        }
-        if (isFiber)
-        {
-            fiberButton.gameObject.SetActive(true);
-        }
-        if (breakCount < 3)
-        {
+            dieFlow = true;
             for (int i = 0; i < cubic.Length; i++)
             {
                 cubic[i].RemoveAnim(false);
@@ -85,11 +80,36 @@ public class GameEngine : MonoBehaviour
         }
         else
         {
-            txtMeter.StartIncreseNum(meter += score);
-            player.SetState(Player.EState.Fly);
+            breakCount++;
+            if (shouldBreak == breakCount)
+            {
+                clearFlow = true;
+                for (int i = 0; i < cubic.Length; i++)
+                {
+                    cubic[i].RemoveAnim(false);
+                }
+                breakCount = 0;
+                txtMeter.StartIncreseNum(meter += 50);
+                player.SetState(Player.EState.Fly);
+            }
         }
-        this.score = 0;
-        breakCount = 0;
+    }
+
+    /// <summary>
+    /// 인게임 게이지가 모두 소모할때
+    /// </summary>
+    public void EndGameTime()
+    {
+        if (dieFlow || clearFlow)
+            return;
+
+        dieFlow = true;
+        for (int i = 0; i < cubic.Length; i++)
+        {
+            cubic[i].RemoveAnim(false);
+        }
+        txtMeter.StartIncreseNum(0);
+        player.SetState(Player.EState.Finish);
     }
 
     private void Start()
@@ -103,6 +123,15 @@ public class GameEngine : MonoBehaviour
         {
             cubic[i].transform.parent.gameObject.SetActive(false);
         }
+
+        Invoke("testc",1.5f);
+    }
+
+    private void testc()
+    {
+        cameraController.ShowFarAway();
+        txtMeter.StartIncreseNum(meter += 300);
+        player.SetState(Player.EState.Start);
     }
 
     private void Update()
@@ -121,6 +150,7 @@ public class GameEngine : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
+            cameraController.ShowFarAway();
             txtMeter.StartIncreseNum(meter += 300);
             player.SetState(Player.EState.Start);
         }
@@ -147,7 +177,7 @@ public class GameEngine : MonoBehaviour
         int splitX = 4;
         int splitY = 4;
         int x = Random.Range(0, 55 / splitX) * splitX;
-        int y = Random.Range(0, 60 / splitY) * splitY;
+        int y = Random.Range(0, 50 / splitY) * splitY;
         position = GetRealPosition(x,y);
         if (!_positionIndex.Contains(position))
         {
@@ -191,32 +221,25 @@ public class GameEngine : MonoBehaviour
     }
 
     /// <summary>
-    /// 최상위 3개의 숫자를 저장한다
-    /// </summary>
-    private void FindTopNumber()
-    {
-        _numberIndex.Sort();
-        for (int i = 7;i > 4;i--)
-        {
-            _topNumberList.Add(_numberIndex[i]);
-        }
-    }
-
-    /// <summary>
     /// 큐빅을 랜덤으로 위치 시킨다.
     /// </summary>
     public void SetCubicRandomPosition()
     {
+        clearFlow = false;
         _positionIndex.Clear();
         _numberIndex.Clear();
-        _topNumberList.Clear();
+        shouldBreak = 0;
 
         for (int i = 0; i < cubic.Length; i++)
         {
             cubic[i].SetPosition(GetRandomPosition());
-            cubic[i].SetNumber(GetRandomNumber());
+            bool type = Random.Range(0, 2) == 1;
+            cubic[i].SetBreak(type);
+            if (type)
+            {
+                shouldBreak++;
+            }
             cubic[i].Appear();
         }
-        FindTopNumber();
     }
 }
