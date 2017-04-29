@@ -49,13 +49,14 @@ public class GameEngine : MonoBehaviour
     List<Vector2> _positionIndex    = new List<Vector2>();
     List<int> _numberIndex          = new List<int>();
 
-    int meter = 0;
-    int breakCount = 0;
-    int score = 0;
-
     int shouldBreak = 0;
-    bool dieFlow = false;
-    bool clearFlow = false;
+    int breakCount  = 0;
+    int meter = 0;
+    int score = 0;
+    int stage = 1;
+
+    bool dieFlow    = false;
+    bool clearFlow  = false;
 
     public void FeberTouch()
     {
@@ -230,16 +231,20 @@ public class GameEngine : MonoBehaviour
         _numberIndex.Clear();
         shouldBreak = 0;
 
-        for (int i = 0; i < cubic.Length; i++)
+        THGameSetting.Level level = THGameSetting.Instance.gameLevel[stage];
+        int monsterCount = Random.Range(level.minBreakCount, level.maxBreakCount + 1);
+        int bombCount    = Random.Range(level.minNoneBreakCount, level.maxNoneBreakCount + 1);
+
+        for (int i = 0; i < monsterCount + bombCount; i++)
         {
             cubic[i].SetPosition(GetRandomPosition());
-            bool type = Random.Range(0, 2) == 1;
-            cubic[i].SetBreak(type);
-            if (type)
+            cubic[i].SetBreak((i < monsterCount));
+            if (i < monsterCount)
             {
                 shouldBreak++;
             }
             cubic[i].Appear();
         }
+        stage++;
     }
 }
