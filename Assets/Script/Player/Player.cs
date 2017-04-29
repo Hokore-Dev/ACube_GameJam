@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     Image loading;
 
+    [SerializeField]
+    AudioSource jumpBGM;
+
     public enum EState
     {
         Ready,
@@ -67,7 +70,8 @@ public class Player : MonoBehaviour
         switch (state)
         {
             case EState.Start:
-                //LeanTween.moveY(this.gameObject, 1.5f, 0.27f);
+                jumpBGM.Play();
+                LeanTween.moveY(this.gameObject, 1.0f, 0.27f).setDelay(0.3f);
                 animation.StartAnimation(characterRenderer, (int)EState.Start, 0.1f, ()=>
                 {
                     fadebox.gameObject.SetActive(true);
@@ -96,7 +100,7 @@ public class Player : MonoBehaviour
                     score.gameObject.SetActive(true);
                     LeanTween.scale(score.gameObject, new Vector3(1, 1), 0.4f).setEaseInOutElastic();
                     LeanTween.alphaCanvas(score.GetComponent<CanvasGroup>(), 1.0f, 0.4f).setOnComplete(() => {
-                        LeanTween.moveLocalY(score.gameObject, 50, 0.4f);
+                        LeanTween.moveLocalY(score.gameObject,750, 0.4f).setEaseInExpo();
                     });
                 });
                 break;
@@ -112,9 +116,9 @@ public class Player : MonoBehaviour
                 if (!fiberBar.isFiberTime)
                 {
                     fiberBar.gameObject.SetActive(false);
-                    LeanTween.moveLocalY(characterRenderer.gameObject, 8.0f, 1.0f)
-                    .setDelay(0.1f)
-                    .setEaseInBack()
+                    LeanTween.moveLocalY(characterRenderer.gameObject, 7.5f, 0.6f)
+                    .setDelay(0.05f)
+                    .setEaseOutBack()
                     .setOnComplete(() => {                        
                         SetGameSetting();
                     });

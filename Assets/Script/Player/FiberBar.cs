@@ -7,7 +7,13 @@ public class FiberBar : MonoBehaviour
     [SerializeField]
     SpriteRenderer gauageBar;
 
-    private const float FIBER_TIME = 1.0f;
+    [SerializeField]
+    AudioSource bgm;
+
+    [SerializeField]
+    AudioSource mainBGM;
+
+    private const float FIBER_TIME = 3.0f;
     private int fiberCount = 4;
     public bool isFiberTime = false;
     private System.Action fiberTimeOutCallback = null;
@@ -30,11 +36,30 @@ public class FiberBar : MonoBehaviour
         fiberCount++;
         if (fiberCount == 5)
         {
+            mainBGM.Stop();
+            bgm.Play();
+            LeanTween.value(bgm.gameObject, 0, 1.0f, 0.3f)
+       .setEase(LeanTweenType.linear)
+       .setOnUpdate((float val) => {
+           bgm.volume = val;
+       });
+
             THHeightManager.Instance.AddHeight(THGameSetting.Instance.autoFeverHeight, FIBER_TIME);
             isFiberTime = true;
 
             UpdateFiberBar(()=> {
+
+
                 LeanTween.scaleX(gauageBar.gameObject, 0, FIBER_TIME).setOnComplete(() => {
+                    mainBGM.Play();
+                    LeanTween.value(bgm.gameObject, 1, 0, 0.3f)
+               .setEase(LeanTweenType.linear)
+               .setOnUpdate((float val) => {
+                   bgm.volume = val;
+                   if (val <= 0)
+                       bgm.Stop();
+               });
+
                     isFiberTime = false;
                     if (fiberTimeOutCallback != null)
                         fiberTimeOutCallback();
