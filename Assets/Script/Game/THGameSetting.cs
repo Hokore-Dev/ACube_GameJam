@@ -18,6 +18,9 @@ public class THGameSetting : MRSingleton<THGameSetting> {
     [Header("콤보당 상승높이")]
     public int[] heighForCombo = new int[4] { 25, 80, 125, 200};
 
+    [Header("게임 단계높이")]
+    public int[] heightLevel = new int[5] { 1000, 5000, 10000, 15000, 20000 };
+
     public int feverCount = 5;    //5번 3콤보 성공시 피버
 
 

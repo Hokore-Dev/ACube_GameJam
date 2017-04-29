@@ -80,7 +80,8 @@ public class GameEngine : MonoBehaviour
             {
                 cubic[i].RemoveAnim(false);
             }
-            txtMeter.StartIncreseNum(0);
+            THHeightManager.Instance.Drop();
+            //txtMeter.StartIncreseNum(0);
             player.SetState(Player.EState.Finish);
         }
         else
@@ -121,7 +122,8 @@ public class GameEngine : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            txtMeter.StartIncreseNum(meter += 300);
+            THHeightManager.Instance.DidCombo(0);   //초반 높이
+            //txtMeter.StartIncreseNum(meter += 300);
             player.SetState(Player.EState.Start);
         }
     }

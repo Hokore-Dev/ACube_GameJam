@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1929340441433642}
   m_IsPrefabParent: 1
+--- !u!1 &1042662403400044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4833200991655998}
+  - component: {fileID: 114658668705732574}
+  m_Layer: 0
+  m_Name: HeightManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1605383512296344
 GameObject:
   m_ObjectHideFlags: 0
@@ -52,7 +68,7 @@ GameObject:
   - component: {fileID: 4747804632253562}
   - component: {fileID: 114986986453781892}
   m_Layer: 0
-  m_Name: GametimeManager
+  m_Name: HPManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,11 +81,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1929340441433642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 262.06662, y: 264.32825, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4747804632253562}
   - {fileID: 4562368259511244}
+  - {fileID: 4833200991655998}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -99,6 +116,31 @@ Transform:
   m_Father: {fileID: 4054338548267746}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4833200991655998
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1042662403400044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4054338548267746}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114658668705732574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1042662403400044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d074ff6e11f4e348b1b2e226cde4953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiHeight: {fileID: 0}
 --- !u!114 &114935798445288546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,4 +163,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adb4eb029a717d499f14655d8396703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIGametimeGage: {fileID: 0}
+  UIHPGage: {fileID: 0}

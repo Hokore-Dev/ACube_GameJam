@@ -17,9 +17,6 @@ public class THGageController : MonoBehaviour {
     [SerializeField]
     protected float currentValue;
 
-    [SerializeField]
-    protected float addValueDuration;
-
     public bool isRun = false;
     private bool callRequest = false;
 
@@ -43,11 +40,11 @@ public class THGageController : MonoBehaviour {
             InitValue(max_value, 0);
     }
 
-    public void SetValue(float current_value)
+    public void SetValue(float current_value, float duration = 0f)
     {
-        if(current_value > currentValue)    // 상승
+        if(duration > 0f)    // 상승
         {
-            LeanTween.value(currentValue, current_value, addValueDuration).setEaseInOutQuad().setOnUpdate(
+            LeanTween.value(currentValue, current_value, duration).setEaseInOutQuad().setOnUpdate(
             (float percent) =>
             {
                 currentValue = percent;

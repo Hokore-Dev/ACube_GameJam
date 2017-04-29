@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     private void SetGameSetting()
     {
         // 게임 베이스 타임 시작
-        THGametimeManager.Instance.Init();
+        THHPManager.Instance.Init();
 
         characterRenderer.transform.localPosition = new Vector3(0, -0.5f, 0);
         fiberBar.gameObject.SetActive(true);

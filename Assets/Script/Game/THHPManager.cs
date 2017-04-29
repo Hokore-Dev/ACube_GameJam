@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class THGametimeManager : MRSingleton<THGametimeManager> {
+public class THHPManager : MRSingleton<THHPManager> {
 
     float currentHP = 0;
     float currentTime = 0f;
     public int CurrentHP { get { return (int)currentHP;  }  }
 
-    public THGageController UIGametimeGage;
+    public THGageController UIHPGage;
     
     enum State
     {
@@ -32,14 +32,14 @@ public class THGametimeManager : MRSingleton<THGametimeManager> {
                 currentHP = 0f;               
                 //게임 오버처리 필요..
             }
-            UIGametimeGage.SetValue(currentHP);
+            UIHPGage.SetValue(currentHP);
         }
 	}
 
     public void Init()
     {
         currentHP = THGameSetting.Instance.maxHP;
-        UIGametimeGage.InitValue(currentHP);
+        UIHPGage.InitValue(currentHP);
         state = State.RUN;
     }
 
@@ -52,7 +52,7 @@ public class THGametimeManager : MRSingleton<THGametimeManager> {
     {
         currentHP += THGameSetting.Instance.healForCombo[comboCount];
         currentHP = Mathf.Clamp(currentHP, 0f, THGameSetting.Instance.maxHP);
-        UIGametimeGage.SetValue(currentHP);
+        UIHPGage.SetValue(currentHP, 0.5f);
     }
 
 

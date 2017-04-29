@@ -26,8 +26,9 @@ public class THIncreseNum : MonoBehaviour {
 		
 	}
 
-    public void StartIncreseNum(int target)
+    public void StartIncreseNum(int target, float duration = 0.5f)
     {
+        this.duration = duration;
         StopCoroutine("CountTo");
         StartCoroutine("CountTo", target);
     }

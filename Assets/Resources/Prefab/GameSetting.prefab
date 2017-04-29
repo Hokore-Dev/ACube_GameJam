@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2cc06ae5579b6468d55f8130f23e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 3
-  addTimeToCombo1: 0.5
-  addTimeToCombo2: 1.5
-  addTimeToCombo3: 2.5
+  maxHP: 100
+  damageForPerSecond: 25
+  healForCombo: 05000000280000003c00000046000000
+  heighForCombo: 19000000500000007d000000c8000000
   feverCount: 5
