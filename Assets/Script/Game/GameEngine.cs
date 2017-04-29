@@ -130,7 +130,9 @@ public class GameEngine : MonoBehaviour
                 {
                     cubic[i].RemoveAnim(false);
                 }
-                THHeightManager.Instance.AddHeight(THGameSetting.Instance.heightPerKillMob * breakCount);
+                int heightValue = THGameSetting.Instance.heightPerKillMob * breakCount;
+                THHeightManager.Instance.AddHeight(heightValue);
+                THSkyBackground.Instance.Scroll(1.0f, heightValue);
                 breakCount = 0;
                 //txtMeter.StartIncreseNum(meter += 50);                
                 player.SetState(Player.EState.Fly);
@@ -166,6 +168,7 @@ public class GameEngine : MonoBehaviour
             cubic[i].RemoveAnim(false);
         }
         //THHeightManager.Instance.Drop();
+        THSkyBackground.Instance.StopBackground();
 
         bossPanel.gameObject.SetActive(true);
         LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
@@ -210,13 +213,17 @@ public class GameEngine : MonoBehaviour
 
     private void Update()
     {
+        if (THIntroManager.Instance.IsIntro())
+            return;
+
         if (Input.GetMouseButtonUp(0))
         {
             if (!startGame)
             {
                 startGame = true;
                 cameraController.ShowFarAway();
-                txtMeter.StartIncreseNum(meter += 300);
+                THHeightManager.Instance.SetHeight(300);
+                //txtMeter.StartIncreseNum(meter += 300);
                 player.SetState(Player.EState.Start);
 
                 LeanTween.moveLocalY(gameUI, 0, 0.5f);

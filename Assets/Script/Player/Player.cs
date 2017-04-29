@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     {
         // 게임 베이스 타임 시작        
         THHPManager.Instance.HPDamageStart();
+        THSkyBackground.Instance.StartBackground();
 
         characterRenderer.transform.localPosition = new Vector3(0, 0.1f, 0);
         fiberBar.gameObject.SetActive(true);
@@ -106,6 +107,7 @@ public class Player : MonoBehaviour
 
                 level += 1; //레벨 업
                 THHPManager.Instance.SetHPToLevel(level);
+                
 
                 if (!fiberBar.isFiberTime)
                 {

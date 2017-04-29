@@ -109,9 +109,12 @@
     <Compile Include="Assets\Script\Cubic\ExplodeController.cs" />
     <Compile Include="Assets\Script\Game\CameraController.cs" />
     <Compile Include="Assets\Script\Game\GameEngine.cs" />
+    <Compile Include="Assets\Script\Game\HitBossPanel.cs" />
     <Compile Include="Assets\Script\Game\THGameSetting.cs" />
     <Compile Include="Assets\Script\Game\THHPManager.cs" />
     <Compile Include="Assets\Script\Game\THHeightManager.cs" />
+    <Compile Include="Assets\Script\Game\THIntroManager.cs" />
+    <Compile Include="Assets\Script\Game\THSkyBackground.cs" />
     <Compile Include="Assets\Script\MRSingleton.cs" />
     <Compile Include="Assets\Script\Player\FiberBar.cs" />
     <Compile Include="Assets\Script\Player\ImageAnimation.cs" />
