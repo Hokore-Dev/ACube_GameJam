@@ -53,8 +53,8 @@ public class THImageGageController : MonoBehaviour {
     protected void OnGUI()
     {
         valueImage.fillAmount = currentValue / maxValue;
-        isRun = !(currentValue == 0);
-        if (currentValue == 0)
+        isRun = !(currentValue <= 0);
+        if (currentValue <= 0)
         {
             if (!callRequest)
             {
