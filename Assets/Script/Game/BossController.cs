@@ -10,10 +10,19 @@ public class BossController : MonoBehaviour {
     [SerializeField]
     GameObject whatboss;
 
+    int _index = -1;
+
     public void Show()
     {
+        if (_index != -1)
+            return;
+
         HideWhatboss();
-        boss[Random.Range(0, boss.Length)].SetActive(true);
+        _index= Random.Range(0, boss.Length);
+        for (int i = 0; i< boss.Length;i++)
+        {
+            boss[i].SetActive(i == _index);
+        }
     }
 
     public void HideWhatboss()

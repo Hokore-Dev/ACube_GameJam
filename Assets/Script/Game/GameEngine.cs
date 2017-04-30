@@ -100,17 +100,29 @@ public class GameEngine : MonoBehaviour
                 cubic[i].RemoveAnim(false);
             }
             explode_bgm.Play();
+            player.fiberBar.gameObject.SetActive(false);
 
-            THSkyBackground.Instance.StopBackground();
+            LeanTween.moveLocalY(player.characterRenderer.gameObject, -4.15f, 0.2f)
+                .setOnComplete(() =>
+                {
+                    player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
+                        LeanTween.moveLocalY(player.characterRenderer.gameObject, -14f, 0.5f).setOnComplete(() => {
+                            THSkyBackground.Instance.StopBackground();
+                            player.controller.Show();
+                            player.characterRenderer.transform.localPosition = new Vector3(0.15f, 2f, 0);
 
-            player.controller.Show();
-            player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
-                bossPanel.gameObject.SetActive(true);
-                LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
-                    .setOnComplete(() => {
-                        bossPanel.StartUserBar();
-                    });
-            }, false);
+                            bossPanel.gameObject.SetActive(true);
+                            LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
+                                .setOnComplete(() => {
+
+                                });
+                            bossPanel.StartUserBar();
+
+                        });
+                    }, false);
+
+
+                });
         }
         else if (type == EType.Break || type == EType.Boss)
         {
@@ -179,18 +191,30 @@ public class GameEngine : MonoBehaviour
             cubic[i].RemoveAnim(false);
         }
         //THHeightManager.Instance.Drop();
-        THSkyBackground.Instance.StopBackground();
-        THCloudManager.Instance.AllClear();
+        player.fiberBar.gameObject.SetActive(false);
 
-        player.controller.Show();
+        LeanTween.moveLocalY(player.characterRenderer.gameObject,-4.15f,0.2f)
+            .setOnComplete(() =>
+            {
+                player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
+                    LeanTween.moveLocalY(player.characterRenderer.gameObject, -14f, 0.5f).setOnComplete(() => {
+                        THSkyBackground.Instance.StopBackground();
+                        THCloudManager.Instance.AllClear();
+                        player.controller.Show();
+                        player.characterRenderer.transform.localPosition = new Vector3(0.15f, 2f, 0);
 
-        player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
-            bossPanel.gameObject.SetActive(true);
-            LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
-                .setOnComplete(() => {
-                    bossPanel.StartUserBar();
-                });
-        }, false);
+                        bossPanel.gameObject.SetActive(true);
+                        LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
+                            .setOnComplete(() => {
+
+                            });
+                        bossPanel.StartUserBar();
+
+                    });
+                }, false);
+                
+           
+        });
     }
 
     private void Start()
@@ -209,8 +233,16 @@ public class GameEngine : MonoBehaviour
 
         bossPanel.callback = () =>
         {
-            player.SetState(Player.EState.Finish);
-            hpBarUI.SetActive(false);
+            player.cutAni.gameObject.SetActive(true);
+            player.cutAni.StartAnimation(player.cutAni.GetComponent<SpriteRenderer>(), 0, 0.1f, () =>
+            {
+                player.cutAni.gameObject.SetActive(false);
+                LeanTween.moveLocalY(player.characterRenderer.gameObject, -4.15f, 0.05f).setOnComplete(() => {
+                    player.SetState(Player.EState.Finish);
+                    hpBarUI.SetActive(false);
+                });
+            });
+                
         };
 
         LeanTween.alphaCanvas(fadeBox, 0, 0.5f).setOnComplete(() => {
@@ -242,7 +274,7 @@ public class GameEngine : MonoBehaviour
                 //txtMeter.StartIncreseNum(meter += 300);
                 player.SetState(Player.EState.Start);
 
-                LeanTween.moveLocalY(gameUI, 1030, 0.5f);
+                LeanTween.moveLocalY(gameUI, 1086, 0.5f);
                 LeanTween.alphaCanvas(gameUI.GetComponent<CanvasGroup>(), 1, 1.0f);
             }
             else if (bossPanel.gameObject.activeSelf)

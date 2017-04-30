@@ -10,6 +10,7 @@ public class ImageAnimation : MonoBehaviour
     public Sprite[] animation2;
     public Sprite[] animation3;
     public Sprite[] animation4;
+    public Sprite[] animation5;
 
     private Sprite[] targetAnimation;
     public float delayTime = 0.1f;
@@ -33,6 +34,7 @@ public class ImageAnimation : MonoBehaviour
             case 2: targetAnimation = animation2; break;
             case 3: targetAnimation = animation3; break;
             case 4: targetAnimation = animation4; break;
+            case 5: targetAnimation = animation5; break;
             default:
                 break;
         }

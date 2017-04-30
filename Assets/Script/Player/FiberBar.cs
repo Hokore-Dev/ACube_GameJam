@@ -17,7 +17,7 @@ public class FiberBar : MonoBehaviour
      FeverAniBG bg;
 
     private const float FIBER_TIME = 3.0f;
-    private int fiberCount = 4;
+    private int fiberCount = 3;
     public bool isFiberTime = false;
     private System.Action fiberTimeOutCallback = null;
 

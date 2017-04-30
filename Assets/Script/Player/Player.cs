@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     GameEngine gameEngine;
 
     [SerializeField]
-    FiberBar fiberBar;
+    public FiberBar fiberBar;
 
     [SerializeField]
     CanvasGroup toMain;
@@ -35,13 +35,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     public BossController controller;
 
+    [SerializeField]
+    public ImageAnimation cutAni;
+
     public enum EState
     {
         Ready,
         Start,
         Fly,
         Game,
-        Finish
+        Finish,
+        CutScene
     }
 
     private EState state = EState.Ready;
@@ -96,24 +100,29 @@ public class Player : MonoBehaviour
                 }, false);
                 break;
             case EState.Finish:
+
                 if (block)
                     return;
 
+                ////
                 block = true;
-                fiberBar.gameObject.SetActive(false);
-                LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
-                    shake.MakeShake(10);
 
-                    toMain.gameObject.SetActive(true);
-                    LeanTween.alphaCanvas(toMain, 1, 0.4f).setDelay(0.7f);
+                     cutAni.gameObject.SetActive(false);
+                     LeanTween.moveLocalY(this.gameObject, -6.2f, 0.5f).setEaseInBack().setOnComplete(() => {
+                         shake.MakeShake(10);
 
-                    score.text = (meter + 100 * (500 - gameEngine.bossPanel.value)).ToString();
-                    score.gameObject.SetActive(true);
-                    LeanTween.scale(score.gameObject, new Vector3(1, 1), 0.4f).setEaseInOutElastic();
-                    LeanTween.alphaCanvas(score.GetComponent<CanvasGroup>(), 1.0f, 0.4f).setOnComplete(() => {
-                        LeanTween.moveLocalY(score.gameObject,750, 0.4f).setEaseInExpo();
-                    });
-                });
+                         toMain.gameObject.SetActive(true);
+                         LeanTween.alphaCanvas(toMain, 1, 0.4f).setDelay(0.7f);
+
+                         score.text = (meter + 100 * (500 - gameEngine.bossPanel.value)).ToString();
+                         score.gameObject.SetActive(true);
+                         LeanTween.scale(score.gameObject, new Vector3(1, 1), 0.4f).setEaseInOutElastic();
+                         LeanTween.alphaCanvas(score.GetComponent<CanvasGroup>(), 1.0f, 0.4f).setOnComplete(() => {
+                             LeanTween.moveLocalY(score.gameObject, 750, 0.4f).setEaseInExpo();
+                         });
+                     });
+
+                
                 break;
             case EState.Fly:
                 upAni.gameObject.SetActive(true);
