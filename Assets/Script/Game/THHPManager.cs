@@ -31,6 +31,7 @@ public class THHPManager : MRSingleton<THHPManager> {
             if(currentHP <= 0f)
             {
                 currentHP = 0f;               
+                HPDamageStop();
                 //게임 오버처리 필요..
             }
             UIHPGage.SetValue(currentHP);
@@ -58,5 +59,12 @@ public class THHPManager : MRSingleton<THHPManager> {
         currentHP = THGameSetting.Instance.maxHP;
         currentHP -= THGameSetting.Instance.damageForLevel * (level - 1);
         UIHPGage.SetValue(currentHP, THGameSetting.Instance.heightMotionTime);
+    }
+
+    public void ZeroHP()
+    {
+        currentHP = 0;
+        HPDamageStop();
+        UIHPGage.SetValue(currentHP);
     }
 }

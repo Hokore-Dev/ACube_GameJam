@@ -92,37 +92,14 @@ public class GameEngine : MonoBehaviour
     /// <param name="shape"></param>
     public void AddBreakCount(EType type,GameObject go = null)
     {
+        if (dieFlow)
+            return;
+
         if (type == EType.NoneBreak)
         {
-            dieFlow = true;
-            for (int i = 0; i < cubic.Length; i++)
-            {
-                cubic[i].RemoveAnim(false);
-            }
             explode_bgm.Play();
-            player.fiberBar.gameObject.SetActive(false);
-
-            LeanTween.moveLocalY(player.characterRenderer.gameObject, -4.15f, 0.2f)
-                .setOnComplete(() =>
-                {
-                    player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
-                        LeanTween.moveLocalY(player.characterRenderer.gameObject, -14f, 0.5f).setOnComplete(() => {
-                            THSkyBackground.Instance.StopBackground();
-                            player.controller.Show();
-                            player.characterRenderer.transform.localPosition = new Vector3(0.15f, 2f, 0);
-
-                            bossPanel.gameObject.SetActive(true);
-                            LeanTween.alphaCanvas(bossPanel.GetComponent<CanvasGroup>(), 1, 0.5f)
-                                .setOnComplete(() => {
-
-                                });
-                            bossPanel.StartUserBar();
-
-                        });
-                    }, false);
-
-
-                });
+            THHPManager.Instance.ZeroHP();
+            EndGame();
         }
         else if (type == EType.Break || type == EType.Boss)
         {
@@ -177,23 +154,16 @@ public class GameEngine : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 인게임 게이지가 모두 소모할때
-    /// </summary>
-    public void EndGameTime()
+    private void EndGame()
     {
-        if (dieFlow || clearFlow)
-            return;
-
         dieFlow = true;
         for (int i = 0; i < cubic.Length; i++)
         {
             cubic[i].RemoveAnim(false);
         }
-        //THHeightManager.Instance.Drop();
         player.fiberBar.gameObject.SetActive(false);
 
-        LeanTween.moveLocalY(player.characterRenderer.gameObject,-4.15f,0.2f)
+        LeanTween.moveLocalY(player.characterRenderer.gameObject, -4.15f, 0.2f)
             .setOnComplete(() =>
             {
                 player.animation.StartAnimation(player.characterRenderer, (int)Player.EState.Finish, 0.1f, () => {
@@ -212,9 +182,18 @@ public class GameEngine : MonoBehaviour
 
                     });
                 }, false);
-                
-           
-        });
+            });
+    }
+
+    /// <summary>
+    /// 인게임 게이지가 모두 소모할때
+    /// </summary>
+    public void EndGameTime()
+    {
+        if (dieFlow || clearFlow)
+            return;
+
+        EndGame();
     }
 
     private void Start()
