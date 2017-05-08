@@ -15,6 +15,7 @@ public class THSkyBackground : MRSingleton<THSkyBackground> {
     bool nowFeverSky;
 
     public Vector3 initPosition;
+    public Vector3 lastPosition;
 
     // Use this for initialization
     void Start () {
@@ -60,11 +61,19 @@ public class THSkyBackground : MRSingleton<THSkyBackground> {
 
     public void Scroll(float duration, int jumpHight)
     {
-        float yPos = transform.position.y;
         THCloudManager.Instance.StartCloud();
-        LeanTween.moveY(gameObject, yPos - (jumpHight / 500f), duration).setOnComplete(() => {
-            THCloudManager.Instance.StopCloud();
-        });
+        float yPos = transform.position.y;
+        if (transform.localPosition.y > lastPosition.y)
+        {
+            LeanTween.moveY(gameObject, yPos - (jumpHight / 500f), duration).setOnComplete(() =>
+            {
+                THCloudManager.Instance.StopCloud();
+            });
+        }
+        else
+        {
+            LeanTween.delayedCall(duration, () => { THCloudManager.Instance.StopCloud(); });
+        }
     }
 
     public void StartBackground()
