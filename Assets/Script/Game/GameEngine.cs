@@ -48,6 +48,8 @@ public class GameEngine : MonoBehaviour
     const int SCREEN_WIDTH = 1440;
     const int SCREEN_HEIGHT = 2560;
 
+    private bool blockTouch = false;
+
     /// <summary>
     /// 스크린 크기에 맞게 화면 리사이즈
     /// </summary>
@@ -240,7 +242,7 @@ public class GameEngine : MonoBehaviour
 
     private void Update()
     {
-        if (THIntroManager.Instance.IsIntro())
+        if (THIntroManager.Instance.IsIntro() || blockTouch)
             return;
 
         if (Input.GetMouseButtonUp(0))
@@ -258,6 +260,7 @@ public class GameEngine : MonoBehaviour
             }
             else if (bossPanel.gameObject.activeSelf)
             {
+                blockTouch = true;
                 bossPanel.ShowLevel(bossPanel.CheckTime());
             }
         }

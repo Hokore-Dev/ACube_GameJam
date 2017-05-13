@@ -13,7 +13,7 @@ public class HitBossPanel : MonoBehaviour {
 
     public System.Action callback = null;
     private bool check = false;
-    public float value = 0;
+    public float value = 500;
 
     public enum EState
     {
@@ -40,6 +40,9 @@ public class HitBossPanel : MonoBehaviour {
 
     public EState CheckTime()
     {
+        // NOTE @minjun 게이지바를 누르면 멈추게 설정
+        LeanTween.cancel(userBar.gameObject);
+
         value = Mathf.Abs(userBar.transform.localPosition.x - 0);
         if (value < 50)
             return EState.Perfect;
